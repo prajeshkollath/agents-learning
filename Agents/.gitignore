@@ -1,0 +1,9 @@
+# Ignore everything at the root
+/*
+
+# Except these
+!.gitignore
+!agents-learning/
+
+# Ignore .claude settings
+.claude/

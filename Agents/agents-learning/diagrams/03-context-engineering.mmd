@@ -1,0 +1,99 @@
+mindmap
+  root((Context Engineering))
+    The Problem
+      Limited Context Windows
+        200k-500k token limits
+        Eventually hit ceiling
+      Unlimited Conversations
+        History grows every turn
+        Token costs increase linearly
+      Need Smart Management
+      ::icon(fa fa-exclamation-triangle)
+    Sliding Window
+      Keep Last N Turns Only
+      Drop Everything Older
+      Analogy: Moving Camera
+      When to Use
+        Short-term memory OK
+        Self-contained turns
+        Predictable costs needed
+      Trade-offs
+        ✓ Simple to implement
+        ✓ Fixed cost ceiling
+        ✗ Loses all old history
+        ✗ May forget important context
+      ::icon(fa fa-window-maximize)
+    Selective Retention
+      Keep Important, Drop Filler
+      Analogy: Packing for Trip
+      Approaches
+        Structured Fields
+          Extract specific data manually
+        Pattern Matching
+          Rule-based filtering
+        LLM Extraction
+          Ask LLM for key facts
+      When to Use
+        Critical vs noise distinction
+        Can define importance rules
+        Need long-term memory
+      Trade-offs
+        ✓ More control
+        ✓ Retain critical info
+        ✗ Needs upfront design
+        ✗ Can miss context if wrong
+      ::icon(fa fa-filter)
+    Summarization
+      Compress Old Turns
+      Keep Recent Turns Full
+      Analogy: Meeting Notes
+      When to Use
+        Long complex conversations
+        Need history awareness
+        Can afford summarization cost
+      Trade-offs
+        ✓ Balances history + detail
+        ✓ Natural approach
+        ✗ Loses nuance
+        ✗ Extra LLM calls
+        ✗ Can compound errors
+      ::icon(fa fa-compress)
+    Hybrid Approach
+      Combine All Three
+      Example
+        Selective: User info, issues
+        Summarization: Old conversation
+        Sliding Window: Last 5 turns
+      Why It Works
+        Structured fields for critical facts
+        Summary for historical context
+        Recent turns for immediate flow
+      Real-World Usage
+      ::icon(fa fa-layer-group)
+    Implementation
+      Agent Prompts
+        Define behavior and role
+        NOT part of context engineering
+      Orchestrator
+        Manages conversation history
+        Implements context strategy
+        Decides what agent sees
+      Key Distinction
+        Agent: HOW to behave
+        Orchestrator: WHAT context to see
+      ::icon(fa fa-cogs)
+    Token Cost Impact
+      Without Engineering
+        Turn 1: 100 tokens
+        Turn 10: 2000+ tokens
+        Linear growth
+      With Sliding Window
+        Stabilizes at window size
+        Fixed cost per turn
+      With Summarization
+        2000 tokens → 200 summary
+        Major savings
+      Result
+        Direct cost control
+        Enable longer conversations
+      ::icon(fa fa-coins)

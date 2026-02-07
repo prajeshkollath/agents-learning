@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Prompt Engineering","children":[{"content":"System Prompts","children":[{"content":"Definition","children":[{"content":"Sets role, rules, context before user input","children":[],"payload":{"tag":"li","lines":"4,5"}}],"payload":{"tag":"h3","lines":"3,4"}},{"content":"Purpose","children":[{"content":"Shape behavior and tone","children":[],"payload":{"tag":"li","lines":"6,7"}},{"content":"Assign role/persona","children":[],"payload":{"tag":"li","lines":"7,8"}},{"content":"Set input/output format","children":[],"payload":{"tag":"li","lines":"8,9"}},{"content":"Establish rules","children":[],"payload":{"tag":"li","lines":"9,10"}}],"payload":{"tag":"h3","lines":"5,6"}},{"content":"Analogy","children":[{"content":"Like briefing an actor before stage","children":[],"payload":{"tag":"li","lines":"11,12"}}],"payload":{"tag":"h3","lines":"10,11"}},{"content":"Location","children":[{"content":"Part of conversation context","children":[],"payload":{"tag":"li","lines":"13,14"}},{"content":"Invisible to user","children":[],"payload":{"tag":"li","lines":"14,15"}},{"content":"In Claude Code: agent files","children":[],"payload":{"tag":"li","lines":"15,17"}}],"payload":{"tag":"h3","lines":"12,13"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Few-Shot Prompting","children":[{"content":"Definition","children":[{"content":"Give examples of desired pattern","children":[],"payload":{"tag":"li","lines":"19,20"}},{"content":"LLM learns and follows pattern","children":[],"payload":{"tag":"li","lines":"20,21"}}],"payload":{"tag":"h3","lines":"18,19"}},{"content":"Types","children":[{"content":"Zero-shot: no examples","children":[],"payload":{"tag":"li","lines":"22,23"}},{"content":"One-shot: 1 example","children":[],"payload":{"tag":"li","lines":"23,24"}},{"content":"Few-shot: 2-5 examples","children":[],"payload":{"tag":"li","lines":"24,25"}}],"payload":{"tag":"h3","lines":"21,22"}},{"content":"When to Use","children":[{"content":"Need specific output format","children":[],"payload":{"tag":"li","lines":"26,27"}},{"content":"Edge cases better shown than explained","children":[],"payload":{"tag":"li","lines":"27,28"}},{"content":"Inconsistent zero-shot results","children":[],"payload":{"tag":"li","lines":"28,29"}}],"payload":{"tag":"h3","lines":"25,26"}},{"content":"Where Examples Go","children":[{"content":"System prompt: for consistency","children":[],"payload":{"tag":"li","lines":"30,31"}},{"content":"User prompt: for flexibility","children":[],"payload":{"tag":"li","lines":"31,32"}}],"payload":{"tag":"h3","lines":"29,30"}},{"content":"Trade-off","children":[{"content":"More examples = better accuracy","children":[],"payload":{"tag":"li","lines":"33,34"}},{"content":"More examples = higher token cost","children":[],"payload":{"tag":"li","lines":"34,36"}}],"payload":{"tag":"h3","lines":"32,33"}}],"payload":{"tag":"h2","lines":"17,18"}},{"content":"Chain-of-Thought","children":[{"content":"Definition","children":[{"content":"LLM shows reasoning steps","children":[],"payload":{"tag":"li","lines":"38,39"}},{"content":"Before final answer","children":[],"payload":{"tag":"li","lines":"39,40"}}],"payload":{"tag":"h3","lines":"37,38"}},{"content":"Analogy","children":[{"content":"Like showing work in math class","children":[],"payload":{"tag":"li","lines":"41,42"}}],"payload":{"tag":"h3","lines":"40,41"}},{"content":"How to Trigger","children":[{"content":"Zero-shot: &quot;think step-by-step&quot;","children":[],"payload":{"tag":"li","lines":"43,44"}},{"content":"Few-shot: show reasoning examples","children":[],"payload":{"tag":"li","lines":"44,45"}}],"payload":{"tag":"h3","lines":"42,43"}},{"content":"LLM Control","children":[{"content":"You control: whether to use CoT","children":[],"payload":{"tag":"li","lines":"46,47"}},{"content":"LLM controls: how it reasons","children":[],"payload":{"tag":"li","lines":"47,48"}},{"content":"Uses own judgment, not your exact steps","children":[],"payload":{"tag":"li","lines":"48,49"}}],"payload":{"tag":"h3","lines":"45,46"}},{"content":"Output","children":[{"content":"Default: reasoning + answer visible","children":[],"payload":{"tag":"li","lines":"50,51"}},{"content":"Optional: only final answer","children":[],"payload":{"tag":"li","lines":"51,52"}}],"payload":{"tag":"h3","lines":"49,50"}},{"content":"When to Use","children":[{"content":"Math and logic problems","children":[],"payload":{"tag":"li","lines":"53,54"}},{"content":"Multi-step reasoning","children":[],"payload":{"tag":"li","lines":"54,55"}},{"content":"Need verifiable logic","children":[],"payload":{"tag":"li","lines":"55,56"}},{"content":"Costly mistakes possible","children":[],"payload":{"tag":"li","lines":"56,58"}}],"payload":{"tag":"h3","lines":"52,53"}}],"payload":{"tag":"h2","lines":"36,37"}},{"content":"Combining Techniques","children":[{"content":"Power Move","children":[{"content":"System prompt: set role and rules","children":[],"payload":{"tag":"li","lines":"60,61"}},{"content":"Few-shot: show example patterns","children":[],"payload":{"tag":"li","lines":"61,62"}},{"content":"Chain-of-thought: request reasoning","children":[],"payload":{"tag":"li","lines":"62,63"}}],"payload":{"tag":"h3","lines":"59,60"}},{"content":"Result","children":[{"content":"Consistent behavior","children":[],"payload":{"tag":"li","lines":"64,65"}},{"content":"Specific format","children":[],"payload":{"tag":"li","lines":"65,66"}},{"content":"Verifiable logic","children":[],"payload":{"tag":"li","lines":"66,68"}}],"payload":{"tag":"h3","lines":"63,64"}}],"payload":{"tag":"h2","lines":"58,59"}},{"content":"Token Costs","children":[{"content":"Stateless LLMs","children":[{"content":"Every call sends full context","children":[],"payload":{"tag":"li","lines":"70,71"}},{"content":"Even in conversations","children":[],"payload":{"tag":"li","lines":"71,72"}}],"payload":{"tag":"h3","lines":"69,70"}},{"content":"Token Growth","children":[{"content":"Turn 1: System + Q1","children":[],"payload":{"tag":"li","lines":"73,74"}},{"content":"Turn 2: System + Q1 + A1 + Q2","children":[],"payload":{"tag":"li","lines":"74,75"}},{"content":"Turn N: System + all history + Qn","children":[],"payload":{"tag":"li","lines":"75,76"}}],"payload":{"tag":"h3","lines":"72,73"}},{"content":"Reduction Strategies","children":[{"content":"Summarization","children":[],"payload":{"tag":"li","lines":"77,78"}},{"content":"Sliding window","children":[],"payload":{"tag":"li","lines":"78,79"}},{"content":"Selective retention","children":[],"payload":{"tag":"li","lines":"79,80"}},{"content":"Smart truncation","children":[],"payload":{"tag":"li","lines":"80,81"}}],"payload":{"tag":"h3","lines":"76,77"}}],"payload":{"tag":"h2","lines":"68,69"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>

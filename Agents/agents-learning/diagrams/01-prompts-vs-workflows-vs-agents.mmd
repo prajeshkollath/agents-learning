@@ -1,0 +1,31 @@
+---
+title: Prompts vs Workflows vs Agents
+---
+mindmap
+  root((LLM Systems))
+    **Prompt**
+      Single LLM call
+      One input / one output
+      No orchestration
+      You control everything
+    **Workflow**
+      Multiple LLM calls
+      Code controls flow
+        Predetermined routing
+        Defined steps
+      Shared state
+      Predictable
+      Example
+        Translate → Summarize → Format
+    **Agent**
+      LLM controls flow
+        Picks tools dynamically
+        Decides when to stop
+      Unpredictable
+      Example
+        Fix this bug autonomously
+    **Key Question**
+      Who decides next step?
+        Prompt → Developer
+        Workflow → Code
+        Agent → LLM
