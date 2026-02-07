@@ -1,0 +1,15 @@
+flowchart TD
+    A[Input] --> B["LLM Call 1<br/>(Extract)"]
+    B --> C{Gate Check}
+    C -->|Pass| D["LLM Call 2<br/>(Transform)"]
+    C -->|Fail| E[Stop / Retry]
+    D --> F{Gate Check}
+    F -->|Pass| G["LLM Call 3<br/>(Format)"]
+    F -->|Fail| E
+    G --> H[Final Output]
+
+    style A fill:#4CAF50,color:#fff
+    style H fill:#2196F3,color:#fff
+    style C fill:#FF9800,color:#fff
+    style F fill:#FF9800,color:#fff
+    style E fill:#f44336,color:#fff

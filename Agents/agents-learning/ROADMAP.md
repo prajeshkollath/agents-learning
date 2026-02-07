@@ -12,7 +12,7 @@
 - [x] 04 - The augmented LLM - retrieval, tools, memory as add-ons to a base LLM
 
 ## Phase 2: Workflow Patterns (Concepts + Claude Code Exercises)
-- [ ] 05 - Prompt chaining - output of one becomes input of next
+- [x] 05 - Prompt chaining - output of one becomes input of next
 - [ ] 06 - Routing - classifying input to pick the right path
 - [ ] 07 - Parallelization - running LLM calls simultaneously, then combining
 - [ ] 08 - Orchestrator-workers - one LLM plans, others execute

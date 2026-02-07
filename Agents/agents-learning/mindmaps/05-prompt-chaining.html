@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Prompt Chaining","children":[{"content":"What It Is","children":[{"content":"Multiple sequential LLM calls","children":[],"payload":{"tag":"h3","lines":"3,4"}},{"content":"Output of one becomes input of next","children":[],"payload":{"tag":"h3","lines":"4,5"}},{"content":"Chain lives in YOUR CODE, not in the LLM","children":[],"payload":{"tag":"h3","lines":"5,6"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Why Chain Instead of One Prompt","children":[{"content":"Each step is focused and verifiable","children":[],"payload":{"tag":"h3","lines":"8,9"}},{"content":"Easy to debug &#x2014; inspect output at each step","children":[],"payload":{"tag":"h3","lines":"9,10"}},{"content":"Can add gates between steps","children":[],"payload":{"tag":"h3","lines":"10,11"}}],"payload":{"tag":"h2","lines":"7,8"}},{"content":"The Pattern","children":[{"content":"Input &#x2192; LLM Call 1 &#x2192; Output 1","children":[],"payload":{"tag":"h3","lines":"13,14"}},{"content":"Output 1 &#x2192; LLM Call 2 &#x2192; Output 2","children":[],"payload":{"tag":"h3","lines":"14,15"}},{"content":"Output 2 &#x2192; LLM Call 3 &#x2192; Final Output","children":[],"payload":{"tag":"h3","lines":"15,16"}}],"payload":{"tag":"h2","lines":"12,13"}},{"content":"Gates (Checkpoints)","children":[{"content":"Programmatic checks between steps","children":[],"payload":{"tag":"h3","lines":"18,19"}},{"content":"Not LLM calls &#x2014; pure code","children":[],"payload":{"tag":"h3","lines":"19,20"}},{"content":"Decide: continue, stop, or retry","children":[],"payload":{"tag":"h3","lines":"20,21"}},{"content":"Quality control without burning tokens","children":[],"payload":{"tag":"h3","lines":"21,22"}}],"payload":{"tag":"h2","lines":"17,18"}},{"content":"Where It Lives","children":[{"content":"Orchestrator code calls LLM multiple times","children":[],"payload":{"tag":"h3","lines":"24,25"}},{"content":"Passes outputs forward","children":[],"payload":{"tag":"h3","lines":"25,26"}},{"content":"Runs gate checks","children":[],"payload":{"tag":"h3","lines":"26,27"}},{"content":"LLM has no idea it&apos;s part of a chain","children":[],"payload":{"tag":"h3","lines":"27,28"}}],"payload":{"tag":"h2","lines":"23,24"}},{"content":"vs Few-Shot","children":[{"content":"Few-shot: ONE call, examples inside prompt","children":[],"payload":{"tag":"h3","lines":"30,31"}},{"content":"Chaining: MULTIPLE calls wired together in code","children":[],"payload":{"tag":"h3","lines":"31,32"}},{"content":"Can use few-shot inside a chain step","children":[],"payload":{"tag":"h3","lines":"32,33"}}],"payload":{"tag":"h2","lines":"29,30"}},{"content":"vs Agent Loops","children":[{"content":"Chain: Fixed predetermined steps","children":[],"payload":{"tag":"h3","lines":"35,36"}},{"content":"Agent: Dynamic, LLM decides next step","children":[],"payload":{"tag":"h3","lines":"36,37"}},{"content":"Chain = workflow, Agent = autonomy","children":[],"payload":{"tag":"h3","lines":"37,38"}}],"payload":{"tag":"h2","lines":"34,35"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>
