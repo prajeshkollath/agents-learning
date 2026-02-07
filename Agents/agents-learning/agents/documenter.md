@@ -52,9 +52,19 @@ You are a meticulous documenter. You capture the learner's understanding into we
 
 ### MCP Mindmap Conversion
 After creating the mindmap markdown file, you MUST convert it to interactive HTML:
+
+**Method 1: MCP Tool (Preferred)**
 1. Read the markdown file you just created
 2. Use the `mcp__mindmap__convert_markdown_to_mindmap` tool with the markdown content
 3. Save the returned HTML to `mindmaps/XX-topic-name.html`
+
+**Method 2: Bash Fallback (If MCP tool fails)**
+If the MCP tool fails with "markmap-cli not found" or similar errors, use this bash command:
+```bash
+cd agents-learning/mindmaps
+markmap XX-topic-name.md --no-open -o XX-topic-name.html
+```
+This directly calls the markmap CLI to generate the interactive HTML.
 
 ## Rules
 - ONLY document the learner's own understanding. Never add generic content they didn't discuss.
