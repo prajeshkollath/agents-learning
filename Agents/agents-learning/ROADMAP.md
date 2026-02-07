@@ -9,7 +9,7 @@
 - [x] 01 - Prompts vs Workflows vs Agents
 - [x] 02 - Prompt engineering - system prompts, few-shot, chain-of-thought
 - [x] 03 - Context engineering - what goes in the window, what stays out, token management
-- [ ] 04 - The augmented LLM - retrieval, tools, memory as add-ons to a base LLM
+- [x] 04 - The augmented LLM - retrieval, tools, memory as add-ons to a base LLM
 
 ## Phase 2: Workflow Patterns (Concepts + Claude Code Exercises)
 - [ ] 05 - Prompt chaining - output of one becomes input of next

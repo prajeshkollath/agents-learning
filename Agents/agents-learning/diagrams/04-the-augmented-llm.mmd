@@ -1,0 +1,107 @@
+graph TB
+    subgraph BaseLLM["Base LLM Limitations"]
+        L1["Knowledge cutoff<br/>No recent data"]
+        L2["Stateless<br/>Forgets everything"]
+        L3["Text-only output<br/>Can't take actions"]
+    end
+
+    subgraph Augmentation["The Three Pillars of Augmentation"]
+        direction TB
+
+        subgraph Retrieval["1. Retrieval (RAG)"]
+            R1["Searches documents"]
+            R2["Adds to prompt"]
+            R3["LLM answers with context"]
+            R1 --> R2 --> R3
+        end
+
+        subgraph Tools["2. Tools"]
+            T1["LLM requests tool"]
+            T2["Your code executes it"]
+            T3["Result returned"]
+            T4["LLM formulates answer"]
+            T1 --> T2 --> T3 --> T4
+        end
+
+        subgraph Memory["3. Memory"]
+            M1["Store after conversation"]
+            M2["Retrieve before new conversation"]
+            M3["Add to prompt"]
+            M1 --> M2 --> M3
+        end
+    end
+
+    subgraph Architecture["System Architecture"]
+        direction TB
+
+        User["User Request"]
+
+        subgraph Orchestrator["Orchestration Layer (Your Code)"]
+            O1["Retrieval System"]
+            O2["Tool Execution"]
+            O3["Memory Management"]
+            O4["Prompt Builder"]
+        end
+
+        LLM["Claude API<br/>(LLM Brain)"]
+
+        User --> O1
+        User --> O2
+        User --> O3
+        O1 --> O4
+        O2 --> O4
+        O3 --> O4
+        O4 --> LLM
+        LLM --> O2
+        O2 --> User
+    end
+
+    subgraph ClaudeCode["Claude Code Implementation"]
+        CC1["Tools: Full ✓<br/>Read, Write, Bash, MCP"]
+        CC2["Retrieval: Partial<br/>On-demand file reading"]
+        CC3["Memory: Partial<br/>Session + MCP memory"]
+    end
+
+    subgraph AgentTypes["The Agent Spectrum"]
+        direction LR
+        A1["Simple Prompt<br/>No tools, no autonomy"]
+        A2["Structured Prompt<br/>Behavior template"]
+        A3["Workflow<br/>Chained LLM calls"]
+        A4["True Agent<br/>Autonomous + Tools + Loops"]
+
+        A1 -.-> A2 -.-> A3 -.-> A4
+    end
+
+    subgraph OrchestratorTypes["Orchestrator vs Agent"]
+        direction TB
+
+        subgraph Unified["Unified (Claude Code)"]
+            U1["Orchestrator = Agent"]
+            U2["Single LLM instance"]
+            U3["Different personas via prompts"]
+        end
+
+        subgraph Separated["Separated (Multi-Agent)"]
+            S1["Orchestrator manages"]
+            S2["Agent 1: Research"]
+            S3["Agent 2: Code"]
+            S4["Agent 3: Test"]
+            S1 --> S2
+            S1 --> S3
+            S1 --> S4
+        end
+    end
+
+    BaseLLM -.->|"Add capabilities"| Augmentation
+    Augmentation -.->|"Implemented via"| Architecture
+    Architecture -.->|"Example"| ClaudeCode
+
+    style BaseLLM fill:#ffcccc
+    style Augmentation fill:#ccffcc
+    style Architecture fill:#ccccff
+    style ClaudeCode fill:#ffffcc
+    style Retrieval fill:#e6ffe6
+    style Tools fill:#e6ffe6
+    style Memory fill:#e6ffe6
+    style Unified fill:#e6f3ff
+    style Separated fill:#ffe6f3
