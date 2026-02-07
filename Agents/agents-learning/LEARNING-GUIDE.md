@@ -211,6 +211,34 @@ This project generates three different formats of documentation for each topic. 
 - Markdown Preview Mermaid Support extension (alternative)
 - Live Server extension (for live preview of HTML mindmaps)
 
+### MCP Servers Used
+This project uses Model Context Protocol (MCP) servers for enhanced capabilities:
+
+**1. memory-bank** (`@modelcontextprotocol/server-memory`)
+- **Purpose:** Persistent knowledge graph across conversations
+- **Stores:** Entities (topics, concepts), relations, observations
+- **Benefits:** Context preservation, queryable learning history
+- **Usage:** Automatically updated by Documenter agent after each topic
+- **View:** Use `mcp__memory-bank__read_graph` to see entire graph
+
+**2. mindmap** (`mindmap-mcp-server`)
+- **Purpose:** Convert markdown to interactive HTML mindmaps
+- **Command:** `markmap <file>.md -o <file>.html`
+- **Fallback:** Direct bash command if MCP tool fails
+- **Benefits:** Automated mindmap HTML generation
+- **Note:** May need direct `markmap` CLI as backup
+
+**Installing MCP Servers:**
+```bash
+# memory-bank (if not already installed)
+npm install -g @modelcontextprotocol/server-memory
+
+# mindmap server (Python-based)
+pip install --user mindmap-mcp-server
+```
+
+**Configuration:** MCP servers are configured in Claude Desktop/Code settings. See MEMORY.md for current setup.
+
 ---
 
 ## Remember

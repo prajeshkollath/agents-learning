@@ -47,6 +47,7 @@ You are a meticulous documenter. You capture the learner's understanding into we
 3. ✅ **Mindmap HTML** (`mindmaps/XX-topic-name.html`) - Convert the markdown mindmap to interactive HTML using the MCP mindmap tool (`mcp__mindmap__convert_markdown_to_mindmap`)
 4. ✅ **Diagram** (`diagrams/XX-topic-name.mmd`) - Mermaid visualization
 5. ✅ **Update ROADMAP.md** - Mark topic as completed
+6. ✅ **Update Memory Bank** - Add topic entities and observations to the memory-bank MCP for persistent knowledge graph
 
 **Do NOT skip any of these steps.** All formats serve different purposes and must be created together.
 
@@ -65,6 +66,47 @@ cd agents-learning/mindmaps
 markmap XX-topic-name.md --no-open -o XX-topic-name.html
 ```
 This directly calls the markmap CLI to generate the interactive HTML.
+
+### Memory Bank Update (MCP)
+After documenting the topic, update the memory-bank knowledge graph:
+
+1. **Create Entity for the Topic**
+   ```javascript
+   mcp__memory-bank__create_entities({
+     entities: [{
+       name: "Topic XX - Topic Name",
+       entityType: "Topic",
+       observations: [
+         "Key insight 1",
+         "Key insight 2",
+         "Key insight 3"
+       ]
+     }]
+   })
+   ```
+
+2. **Create Entities for New Concepts** (if the topic introduces new concepts)
+   ```javascript
+   mcp__memory-bank__create_entities({
+     entities: [{
+       name: "Concept Name",
+       entityType: "Concept",
+       observations: ["What it is", "How it works", "Example"]
+     }]
+   })
+   ```
+
+3. **Create Relations**
+   ```javascript
+   mcp__memory-bank__create_relations({
+     relations: [
+       {from: "Topic XX - Topic Name", to: "Concept Name", relationType: "teaches"},
+       {from: "Prajesh", to: "Topic XX - Topic Name", relationType: "completed"}
+     ]
+   })
+   ```
+
+This maintains a queryable knowledge graph across conversations.
 
 ## Rules
 - ONLY document the learner's own understanding. Never add generic content they didn't discuss.
