@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Evaluator-Optimizer","children":[{"content":"What It Is","children":[{"content":"One LLM generates, another critiques","children":[],"payload":{"tag":"li","lines":"3,4"}},{"content":"Loop until output is good enough","children":[],"payload":{"tag":"li","lines":"4,5"}},{"content":"Writer and editor analogy","children":[],"payload":{"tag":"li","lines":"5,7"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"The Two Roles","children":[{"content":"Generator","children":[{"content":"Produces initial output","children":[],"payload":{"tag":"li","lines":"9,10"}},{"content":"Revises based on feedback","children":[],"payload":{"tag":"li","lines":"10,11"}}],"payload":{"tag":"h3","lines":"8,9"}},{"content":"Evaluator","children":[{"content":"Reviews against criteria","children":[],"payload":{"tag":"li","lines":"12,13"}},{"content":"Gives specific actionable feedback","children":[],"payload":{"tag":"li","lines":"13,14"}},{"content":"Decides when to stop","children":[],"payload":{"tag":"li","lines":"14,16"}}],"payload":{"tag":"h3","lines":"11,12"}}],"payload":{"tag":"h2","lines":"7,8"}},{"content":"vs Gates","children":[{"content":"Gate: pass/fail, binary, code-based","children":[],"payload":{"tag":"li","lines":"17,18"}},{"content":"Evaluator: qualitative feedback, LLM-based","children":[],"payload":{"tag":"li","lines":"18,19"}},{"content":"Gate retries blindly, evaluator says what to fix","children":[],"payload":{"tag":"li","lines":"19,21"}}],"payload":{"tag":"h2","lines":"16,17"}},{"content":"Separate Call, Not Separate Model","children":[{"content":"Can Mix Models","children":[{"content":"Cheap generator + smart evaluator (save cost)","children":[],"payload":{"tag":"li","lines":"26,27"}},{"content":"Smart generator + cheap evaluator (easy checks)","children":[],"payload":{"tag":"li","lines":"27,29"}}],"payload":{"tag":"h3","lines":"25,26"}}],"payload":{"tag":"h2","lines":"21,22"}},{"content":"Critical: Max Iterations","children":[{"content":"Always set a limit","children":[],"payload":{"tag":"li","lines":"30,31"}},{"content":"Without it, loop runs forever","children":[],"payload":{"tag":"li","lines":"31,33"}}],"payload":{"tag":"h2","lines":"29,30"}},{"content":"Use Cases","children":[{"content":"Code generation and review","children":[],"payload":{"tag":"li","lines":"34,35"}},{"content":"Writing drafts and revision","children":[],"payload":{"tag":"li","lines":"35,36"}},{"content":"Translation and back-translation","children":[],"payload":{"tag":"li","lines":"36,37"}},{"content":"Data extraction and verification","children":[],"payload":{"tag":"li","lines":"37,39"}}],"payload":{"tag":"h2","lines":"33,34"}},{"content":"Phase 2 Complete: All 5 Patterns","children":[{"content":"Chaining: sequential","children":[],"payload":{"tag":"li","lines":"40,41"}},{"content":"Routing: branching","children":[],"payload":{"tag":"li","lines":"41,42"}},{"content":"Parallelization: fan-out","children":[],"payload":{"tag":"li","lines":"42,43"}},{"content":"Orchestrator-Workers: dynamic planning","children":[],"payload":{"tag":"li","lines":"43,44"}},{"content":"Evaluator-Optimizer: feedback loop","children":[],"payload":{"tag":"li","lines":"44,45"}}],"payload":{"tag":"h2","lines":"39,40"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>

@@ -16,7 +16,7 @@
 - [x] 06 - Routing - classifying input to pick the right path
 - [x] 07 - Parallelization - running LLM calls simultaneously, then combining
 - [x] 08 - Orchestrator-workers - one LLM plans, others execute
-- [ ] 09 - Evaluator-optimizer - one generates, another critiques in a loop
+- [x] 09 - Evaluator-optimizer - one generates, another critiques in a loop
 
 ## Phase 3: Agents in Claude Code
 - [ ] 10 - What makes an agent (tool use, loops, autonomy)

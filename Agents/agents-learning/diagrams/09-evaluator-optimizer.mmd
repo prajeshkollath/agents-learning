@@ -1,0 +1,27 @@
+flowchart TD
+    Task[/"Task"/]
+    Task --> Gen["Generator LLM\n(Create draft)"]
+    Gen --> Draft["Draft Output"]
+    Draft --> Eval{"Evaluator LLM\n(Critique)"}
+
+    Eval -->|"APPROVED"| Final[/"Final Output"/]
+    Eval -->|"Feedback:\nwhat to fix"| Revise["Generator LLM\n(Revise with feedback)"]
+    Revise --> Draft2["Revised Draft"]
+    Draft2 --> Eval
+
+    MaxIter["⚠ Max iterations\nlimit required"]
+    MaxIter -.-> Eval
+
+    subgraph Key["Key Insight"]
+        direction LR
+        Same["Same model OK\n(e.g. Sonnet + Sonnet)"]
+        Diff["Different prompts\n+ Fresh context"]
+        NoBias["No anchoring bias"]
+    end
+
+    style Task fill:#e3f2fd,stroke:#1565c0,color:#000
+    style Final fill:#e8f5e9,stroke:#2e7d32,color:#000
+    style Gen fill:#e1bee7,stroke:#6a1b9a,color:#000
+    style Revise fill:#e1bee7,stroke:#6a1b9a,color:#000
+    style Eval fill:#f9a825,stroke:#f57f17,color:#000
+    style MaxIter fill:#ffcdd2,stroke:#c62828,color:#000
