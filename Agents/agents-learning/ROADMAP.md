@@ -14,7 +14,7 @@
 ## Phase 2: Workflow Patterns (Concepts + Claude Code Exercises)
 - [x] 05 - Prompt chaining - output of one becomes input of next
 - [x] 06 - Routing - classifying input to pick the right path
-- [ ] 07 - Parallelization - running LLM calls simultaneously, then combining
+- [x] 07 - Parallelization - running LLM calls simultaneously, then combining
 - [ ] 08 - Orchestrator-workers - one LLM plans, others execute
 - [ ] 09 - Evaluator-optimizer - one generates, another critiques in a loop
 

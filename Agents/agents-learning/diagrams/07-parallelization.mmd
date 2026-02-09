@@ -1,0 +1,29 @@
+flowchart TD
+    subgraph Sectioning["Sectioning Pattern"]
+        Input1[/"Input: Document"/]
+        Input1 --> A1["Analyze Tone"]
+        Input1 --> A2["Extract Facts"]
+        Input1 --> A3["Check Bias"]
+        A1 --> Merge["Merge Results"]
+        A2 --> Merge
+        A3 --> Merge
+        Merge --> Out1[/"Combined Report"/]
+    end
+
+    subgraph Voting["Voting Pattern"]
+        Input2[/"Input: Is this spam?"/]
+        Input2 --> V1["LLM Call 1\n→ Yes"]
+        Input2 --> V2["LLM Call 2\n→ Yes"]
+        Input2 --> V3["LLM Call 3\n→ No"]
+        V1 --> Vote{"Majority\nVote"}
+        V2 --> Vote
+        V3 --> Vote
+        Vote --> Out2[/"Result: Yes (2/3)"/]
+    end
+
+    style Input1 fill:#e3f2fd,stroke:#1565c0,color:#000
+    style Input2 fill:#e3f2fd,stroke:#1565c0,color:#000
+    style Out1 fill:#e8f5e9,stroke:#2e7d32,color:#000
+    style Out2 fill:#e8f5e9,stroke:#2e7d32,color:#000
+    style Merge fill:#fff3e0,stroke:#e65100,color:#000
+    style Vote fill:#fff3e0,stroke:#e65100,color:#000

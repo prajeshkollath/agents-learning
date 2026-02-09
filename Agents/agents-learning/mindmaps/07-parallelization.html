@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Parallelization","children":[{"content":"What It Is","children":[{"content":"Run multiple LLM calls at the same time","children":[],"payload":{"tag":"li","lines":"3,4"}},{"content":"Combine results after all complete","children":[],"payload":{"tag":"li","lines":"4,5"}},{"content":"Lives in the orchestrator code","children":[],"payload":{"tag":"li","lines":"5,7"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Two Patterns","children":[{"content":"Sectioning","children":[{"content":"Each call does a different task","children":[],"payload":{"tag":"li","lines":"9,10"}},{"content":"Same input, different jobs","children":[],"payload":{"tag":"li","lines":"10,11"}},{"content":"Combine by merging results","children":[],"payload":{"tag":"li","lines":"11,12"}},{"content":"Why: Speed","children":[],"payload":{"tag":"li","lines":"12,13"}}],"payload":{"tag":"h3","lines":"8,9"}},{"content":"Voting","children":[{"content":"Each call does the same task","children":[],"payload":{"tag":"li","lines":"14,15"}},{"content":"Same input, same job, multiple times","children":[],"payload":{"tag":"li","lines":"15,16"}},{"content":"Combine by majority vote or best-of-N","children":[],"payload":{"tag":"li","lines":"16,17"}},{"content":"Why: Reliability","children":[],"payload":{"tag":"li","lines":"17,19"}}],"payload":{"tag":"h3","lines":"13,14"}}],"payload":{"tag":"h2","lines":"7,8"}},{"content":"Key Rule","children":[{"content":"Only parallelize independent tasks","children":[],"payload":{"tag":"li","lines":"20,21"}},{"content":"If B needs A&apos;s output, that&apos;s chaining","children":[],"payload":{"tag":"li","lines":"21,23"}}],"payload":{"tag":"h2","lines":"19,20"}},{"content":"Combining with Other Patterns","children":[{"content":"Route then Parallelize","children":[{"content":"Pick the path, then fan out within it","children":[],"payload":{"tag":"li","lines":"25,26"}}],"payload":{"tag":"h3","lines":"24,25"}},{"content":"Parallelize then Chain","children":[{"content":"Fan out, combine, then pass to next step","children":[],"payload":{"tag":"li","lines":"27,28"}}],"payload":{"tag":"h3","lines":"26,27"}},{"content":"Parallelize with Gates","children":[{"content":"Each branch has its own quality checks","children":[],"payload":{"tag":"li","lines":"29,31"}}],"payload":{"tag":"h3","lines":"28,29"}}],"payload":{"tag":"h2","lines":"23,24"}},{"content":"vs Other Patterns","children":[{"content":"Chaining: sequential, steps depend on each other","children":[],"payload":{"tag":"li","lines":"32,33"}},{"content":"Routing: picks ONE path","children":[],"payload":{"tag":"li","lines":"33,34"}},{"content":"Parallelization: runs MULTIPLE paths at once","children":[],"payload":{"tag":"li","lines":"34,35"}}],"payload":{"tag":"h2","lines":"31,32"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>
