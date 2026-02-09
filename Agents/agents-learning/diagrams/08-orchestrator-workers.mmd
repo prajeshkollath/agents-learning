@@ -1,0 +1,30 @@
+flowchart TD
+    Task[/"User Task"/]
+
+    Task --> Orch1["Orchestrator LLM\n(Plan)"]
+    Orch1 --> Parse["Your Code:\nParse JSON subtasks"]
+
+    Parse --> W1["Worker LLM\nSubtask 1"]
+    Parse --> W2["Worker LLM\nSubtask 2"]
+    Parse --> W3["Worker LLM\nSubtask N..."]
+
+    W1 --> Orch2["Orchestrator LLM\n(Combine)"]
+    W2 --> Orch2
+    W3 --> Orch2
+
+    Orch2 --> Final[/"Final Output"/]
+
+    subgraph Flexibility["Worker Prompt Levels"]
+        L1["Level 1\nHardcoded prompt\n(Low flex)"]
+        L2["Level 2\nOrchestrator writes prompt\n(High flex)"]
+        L3["Level 3\nBase + Dynamic\n(Production)"]
+    end
+
+    style Task fill:#e3f2fd,stroke:#1565c0,color:#000
+    style Final fill:#e8f5e9,stroke:#2e7d32,color:#000
+    style Orch1 fill:#f9a825,stroke:#f57f17,color:#000
+    style Orch2 fill:#f9a825,stroke:#f57f17,color:#000
+    style Parse fill:#fff3e0,stroke:#e65100,color:#000
+    style W1 fill:#e1bee7,stroke:#6a1b9a,color:#000
+    style W2 fill:#e1bee7,stroke:#6a1b9a,color:#000
+    style W3 fill:#e1bee7,stroke:#6a1b9a,color:#000

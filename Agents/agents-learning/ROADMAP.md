@@ -15,7 +15,7 @@
 - [x] 05 - Prompt chaining - output of one becomes input of next
 - [x] 06 - Routing - classifying input to pick the right path
 - [x] 07 - Parallelization - running LLM calls simultaneously, then combining
-- [ ] 08 - Orchestrator-workers - one LLM plans, others execute
+- [x] 08 - Orchestrator-workers - one LLM plans, others execute
 - [ ] 09 - Evaluator-optimizer - one generates, another critiques in a loop
 
 ## Phase 3: Agents in Claude Code

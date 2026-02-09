@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Orchestrator-Workers","children":[{"content":"What It Is","children":[{"content":"One LLM plans, others execute","children":[],"payload":{"tag":"li","lines":"3,4"}},{"content":"LLM decides the subtasks at runtime","children":[],"payload":{"tag":"li","lines":"4,5"}},{"content":"First pattern where steps aren&apos;t known in advance","children":[],"payload":{"tag":"li","lines":"5,7"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"The Two Roles","children":[{"content":"Orchestrator","children":[{"content":"Receives high-level task","children":[],"payload":{"tag":"li","lines":"9,10"}},{"content":"Breaks into subtasks","children":[],"payload":{"tag":"li","lines":"10,11"}},{"content":"Decides number of workers","children":[],"payload":{"tag":"li","lines":"11,12"}},{"content":"Combines results","children":[],"payload":{"tag":"li","lines":"12,13"}}],"payload":{"tag":"h3","lines":"8,9"}},{"content":"Workers","children":[{"content":"Each gets ONE subtask","children":[],"payload":{"tag":"li","lines":"14,15"}},{"content":"Works independently","children":[],"payload":{"tag":"li","lines":"15,16"}},{"content":"Returns result to orchestrator","children":[],"payload":{"tag":"li","lines":"16,18"}}],"payload":{"tag":"h3","lines":"13,14"}}],"payload":{"tag":"h2","lines":"7,8"}},{"content":"The Flow","children":[{"content":"Orchestrator plans (LLM call)","children":[],"payload":{"tag":"li","lines":"19,20"}},{"content":"Your code parses the plan","children":[],"payload":{"tag":"li","lines":"20,21"}},{"content":"Your code loops and calls workers","children":[],"payload":{"tag":"li","lines":"21,22"}},{"content":"Orchestrator combines (LLM call)","children":[],"payload":{"tag":"li","lines":"22,23"}},{"content":"Structured output (JSON) is critical","children":[],"payload":{"tag":"li","lines":"23,25"}}],"payload":{"tag":"h2","lines":"18,19"}},{"content":"Worker Prompt Flexibility","children":[{"content":"Level 1: Hardcoded","children":[{"content":"Developer writes worker prompt","children":[],"payload":{"tag":"li","lines":"27,28"}},{"content":"Low flexibility, high control","children":[],"payload":{"tag":"li","lines":"28,29"}},{"content":"One use case only","children":[],"payload":{"tag":"li","lines":"29,30"}}],"payload":{"tag":"h3","lines":"26,27"}},{"content":"Level 2: Orchestrator Generates","children":[{"content":"Orchestrator writes worker prompts","children":[],"payload":{"tag":"li","lines":"31,32"}},{"content":"High flexibility, low control","children":[],"payload":{"tag":"li","lines":"32,33"}},{"content":"Handles any request","children":[],"payload":{"tag":"li","lines":"33,34"}}],"payload":{"tag":"h3","lines":"30,31"}},{"content":"Level 3: Base + Dynamic","children":[{"content":"Developer sets guardrails/role","children":[],"payload":{"tag":"li","lines":"35,36"}},{"content":"Orchestrator fills in specifics","children":[],"payload":{"tag":"li","lines":"36,37"}},{"content":"Most common in production","children":[],"payload":{"tag":"li","lines":"37,38"}},{"content":"Claude Code works this way","children":[],"payload":{"tag":"li","lines":"38,40"}}],"payload":{"tag":"h3","lines":"34,35"}}],"payload":{"tag":"h2","lines":"25,26"}},{"content":"The Tradeoff","children":[{"content":"More orchestrator freedom = more general","children":[],"payload":{"tag":"li","lines":"41,42"}},{"content":"More orchestrator freedom = less predictable","children":[],"payload":{"tag":"li","lines":"42,44"}}],"payload":{"tag":"h2","lines":"40,41"}},{"content":"vs Other Patterns","children":[{"content":"Chaining: developer decides steps, fixed","children":[],"payload":{"tag":"li","lines":"45,46"}},{"content":"Routing: predefined paths","children":[],"payload":{"tag":"li","lines":"46,47"}},{"content":"Parallelization: developer decides fan-out, fixed","children":[],"payload":{"tag":"li","lines":"47,48"}},{"content":"Orchestrator-Workers: LLM decides everything at runtime","children":[],"payload":{"tag":"li","lines":"48,49"}}],"payload":{"tag":"h2","lines":"44,45"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>
