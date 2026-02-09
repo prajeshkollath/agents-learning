@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"What Makes an Agent","children":[{"content":"Three Ingredients","children":[{"content":"Tool Use","children":[{"content":"Can take actions in the world","children":[],"payload":{"tag":"li","lines":"4,5"}},{"content":"Read files, search, run code, query DBs","children":[],"payload":{"tag":"li","lines":"5,6"}},{"content":"Without tools, LLM can only generate text","children":[],"payload":{"tag":"li","lines":"6,7"}}],"payload":{"tag":"h3","lines":"3,4"}},{"content":"A Loop","children":[{"content":"Observe &#x2192; Think &#x2192; Act &#x2192; repeat","children":[],"payload":{"tag":"li","lines":"8,9"}},{"content":"Not a fixed number of iterations","children":[],"payload":{"tag":"li","lines":"9,10"}},{"content":"Agent decides when to stop","children":[],"payload":{"tag":"li","lines":"10,11"}}],"payload":{"tag":"h3","lines":"7,8"}},{"content":"Autonomy","children":[{"content":"LLM decides what tool to use next","children":[],"payload":{"tag":"li","lines":"12,13"}},{"content":"LLM decides when it&apos;s done","children":[],"payload":{"tag":"li","lines":"13,14"}},{"content":"Code doesn&apos;t hardcode these decisions","children":[],"payload":{"tag":"li","lines":"14,16"}}],"payload":{"tag":"h3","lines":"11,12"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Agent vs Workflow","children":[{"content":"Workflow: your code controls the flow","children":[],"payload":{"tag":"li","lines":"17,18"}},{"content":"Agent: the LLM controls the flow","children":[],"payload":{"tag":"li","lines":"18,19"}},{"content":"Orchestrator-workers was the bridge","children":[],"payload":{"tag":"li","lines":"19,21"}}],"payload":{"tag":"h2","lines":"16,17"}},{"content":"The Spectrum","children":[{"content":"Pure LLM: basic chat, no tools, you drive","children":[],"payload":{"tag":"li","lines":"22,23"}},{"content":"LLM + tools: some agentic behavior","children":[],"payload":{"tag":"li","lines":"23,24"}},{"content":"Full agent: loop, tools, autonomy","children":[],"payload":{"tag":"li","lines":"24,26"}}],"payload":{"tag":"h2","lines":"21,22"}},{"content":"How to Get Agentic Behavior","children":[{"content":"Pre-built agent apps","children":[{"content":"Claude Code, Copilot, ChatGPT with tools","children":[],"payload":{"tag":"li","lines":"28,29"}},{"content":"Company built the loop","children":[],"payload":{"tag":"li","lines":"29,30"}}],"payload":{"tag":"h3","lines":"27,28"}},{"content":"Agent frameworks","children":[{"content":"Claude Agent SDK, LangChain","children":[],"payload":{"tag":"li","lines":"31,32"}},{"content":"Framework built the loop, you configure","children":[],"payload":{"tag":"li","lines":"32,33"}}],"payload":{"tag":"h3","lines":"30,31"}},{"content":"Raw API + your code","children":[{"content":"You build the loop yourself","children":[],"payload":{"tag":"li","lines":"34,35"}},{"content":"~30-40 lines of Python","children":[],"payload":{"tag":"li","lines":"35,36"}},{"content":"Best for understanding internals","children":[],"payload":{"tag":"li","lines":"36,38"}}],"payload":{"tag":"h3","lines":"33,34"}}],"payload":{"tag":"h2","lines":"26,27"}},{"content":"Key Insights","children":[{"content":"API alone = just an LLM, not an agent","children":[],"payload":{"tag":"li","lines":"39,40"}},{"content":"Adding MCP tools doesn&apos;t make something an agent","children":[],"payload":{"tag":"li","lines":"40,41"}},{"content":"The loop was already there, MCP adds more tools","children":[],"payload":{"tag":"li","lines":"41,42"}},{"content":"Build raw first, then use frameworks","children":[],"payload":{"tag":"li","lines":"42,43"}}],"payload":{"tag":"h2","lines":"38,39"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>

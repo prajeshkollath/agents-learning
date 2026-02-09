@@ -1,0 +1,33 @@
+flowchart TD
+    subgraph Agent["What Makes an Agent"]
+        Brain["LLM\n(The Brain)"]
+        Tools["Tools\n(Read, Search, Code, DB)"]
+        Loop["Loop\n(Observe → Think → Act)"]
+        Autonomy["Autonomy\n(LLM decides next step)"]
+
+        Brain --> Loop
+        Tools --> Loop
+        Autonomy --> Loop
+    end
+
+    subgraph Ways["How to Get Agent Behavior"]
+        Raw["Raw API\n+ Your Loop Code"]
+        Framework["Agent Framework\n(SDK, LangChain)"]
+        App["Pre-built App\n(Claude Code, Copilot)"]
+    end
+
+    subgraph Spectrum["The Spectrum"]
+        direction LR
+        Chat["Basic Chat\n(Just LLM)"]
+        Semi["LLM + Tools\n(Semi-auto)"]
+        Full["Full Agent\n(Loop + Tools + Autonomy)"]
+        Chat -->|"add tools"| Semi
+        Semi -->|"add loop + autonomy"| Full
+    end
+
+    style Brain fill:#e3f2fd,stroke:#1565c0,color:#000
+    style Tools fill:#fff3e0,stroke:#e65100,color:#000
+    style Loop fill:#f9a825,stroke:#f57f17,color:#000
+    style Autonomy fill:#e8f5e9,stroke:#2e7d32,color:#000
+    style Chat fill:#ffcdd2,stroke:#c62828,color:#000
+    style Full fill:#e8f5e9,stroke:#2e7d32,color:#000
