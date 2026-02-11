@@ -1,0 +1,42 @@
+flowchart TD
+    subgraph Loop["The Agent Loop"]
+        direction TB
+        Observe["OBSERVE\n(See tool result / user input)"]
+        Think["THINK\n(Reason about next step)"]
+        Act["ACT\n(Call a tool)"]
+        Done["DONE\n(Return final answer)"]
+
+        Observe --> Think
+        Think --> Act
+        Act -->|"tool result feeds back"| Observe
+        Think -->|"stop_reason = end_turn"| Done
+    end
+
+    subgraph API["API-Level Signal"]
+        ToolUse["stop_reason: tool_use\n→ keep looping"]
+        EndTurn["stop_reason: end_turn\n→ stop"]
+    end
+
+    subgraph Safety["Stop Conditions"]
+        MaxIter["Max Iterations\n(hard limit in your code)"]
+        ContextFull["Context Window Full\n(no room for more)"]
+        Errors["Error Threshold\n(too many failures)"]
+    end
+
+    subgraph Spectrum["Workflow → Agent Spectrum"]
+        direction LR
+        Workflows["Workflows (05-09)\nCode controls the loop\nSteps known upfront"]
+        OrcWorkers["Orchestrator-Workers (08)\nLLM plans, code loops\nThe bridge"]
+        AgentLoop["Agent Loop (11)\nLLM controls the loop\nSteps NOT known upfront"]
+        Workflows -->|"more LLM control"| OrcWorkers
+        OrcWorkers -->|"full LLM control"| AgentLoop
+    end
+
+    style Observe fill:#e3f2fd,stroke:#1565c0,color:#000
+    style Think fill:#fff3e0,stroke:#e65100,color:#000
+    style Act fill:#f9a825,stroke:#f57f17,color:#000
+    style Done fill:#e8f5e9,stroke:#2e7d32,color:#000
+    style MaxIter fill:#ffcdd2,stroke:#c62828,color:#000
+    style ContextFull fill:#ffcdd2,stroke:#c62828,color:#000
+    style Errors fill:#ffcdd2,stroke:#c62828,color:#000
+    style AgentLoop fill:#e8f5e9,stroke:#2e7d32,color:#000

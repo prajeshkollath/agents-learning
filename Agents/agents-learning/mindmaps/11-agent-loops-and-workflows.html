@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Agent Loops &amp; Workflows","children":[{"content":"The Agent Loop","children":[{"content":"Observe","children":[{"content":"Receive input: user request, tool results, errors","children":[],"payload":{"tag":"li","lines":"4,5"}},{"content":"This is what the LLM sees each turn","children":[],"payload":{"tag":"li","lines":"5,6"}}],"payload":{"tag":"h3","lines":"3,4"}},{"content":"Think","children":[{"content":"Reason about what to do next","children":[],"payload":{"tag":"li","lines":"7,8"}},{"content":"Chain-of-thought generation","children":[],"payload":{"tag":"li","lines":"8,9"}}],"payload":{"tag":"h3","lines":"6,7"}},{"content":"Act","children":[{"content":"Pick a tool and call it","children":[],"payload":{"tag":"li","lines":"10,11"}},{"content":"Reach out into the world","children":[],"payload":{"tag":"li","lines":"11,12"}}],"payload":{"tag":"h3","lines":"9,10"}},{"content":"Repeat or Stop","children":[{"content":"Loop back to Observe with tool result","children":[],"payload":{"tag":"li","lines":"13,14"}},{"content":"Or return final answer if done","children":[],"payload":{"tag":"li","lines":"14,16"}}],"payload":{"tag":"h3","lines":"12,13"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"How It Works (API Level)","children":[{"content":"The stop_reason signal","children":[{"content":"tool_use &#x2192; agent has more work, keep looping","children":[],"payload":{"tag":"li","lines":"18,19"}},{"content":"end_turn &#x2192; agent is done, stop","children":[],"payload":{"tag":"li","lines":"19,20"}}],"payload":{"tag":"h3","lines":"17,18"}},{"content":"The loop is ~10 lines of code","children":[{"content":"Call API, check stop_reason, execute tool, feed result back","children":[],"payload":{"tag":"li","lines":"21,22"}}],"payload":{"tag":"h3","lines":"20,21"}},{"content":"Messages grow each iteration","children":[{"content":"Assistant response + tool result appended every turn","children":[],"payload":{"tag":"li","lines":"23,25"}}],"payload":{"tag":"h3","lines":"22,23"}}],"payload":{"tag":"h2","lines":"16,17"}},{"content":"ReAct Pattern","children":[{"content":"Reasoning + Acting","children":[{"content":"The formal name for this loop","children":[],"payload":{"tag":"li","lines":"27,28"}}],"payload":{"tag":"h3","lines":"26,27"}},{"content":"Each turn is explicit","children":[{"content":"Thought: what I&apos;m thinking","children":[],"payload":{"tag":"li","lines":"29,30"}},{"content":"Action: what tool I&apos;m using","children":[],"payload":{"tag":"li","lines":"30,31"}},{"content":"Observation: what I got back","children":[],"payload":{"tag":"li","lines":"31,32"}}],"payload":{"tag":"h3","lines":"28,29"}},{"content":"Claude Code uses ReAct","children":[{"content":"You can see it reasoning before each tool call","children":[],"payload":{"tag":"li","lines":"33,35"}}],"payload":{"tag":"h3","lines":"32,33"}}],"payload":{"tag":"h2","lines":"25,26"}},{"content":"Stop Conditions","children":[{"content":"Task complete","children":[{"content":"LLM decides it&apos;s done (end_turn)","children":[],"payload":{"tag":"li","lines":"37,38"}}],"payload":{"tag":"h3","lines":"36,37"}},{"content":"Max iterations","children":[{"content":"Hard limit in your code &#x2014; always set one","children":[],"payload":{"tag":"li","lines":"39,40"}}],"payload":{"tag":"h3","lines":"38,39"}},{"content":"Context window full","children":[{"content":"No room for more reasoning","children":[],"payload":{"tag":"li","lines":"41,42"}}],"payload":{"tag":"h3","lines":"40,41"}},{"content":"Error threshold","children":[{"content":"Too many consecutive failures","children":[],"payload":{"tag":"li","lines":"43,44"}}],"payload":{"tag":"h3","lines":"42,43"}},{"content":"User cancels","children":[{"content":"User intervenes and redirects","children":[],"payload":{"tag":"li","lines":"45,47"}}],"payload":{"tag":"h3","lines":"44,45"}}],"payload":{"tag":"h2","lines":"35,36"}},{"content":"Agent Loop vs Workflows","children":[{"content":"Workflows (05-09)","children":[{"content":"Code controls the loop","children":[],"payload":{"tag":"li","lines":"49,50"}},{"content":"Steps known upfront","children":[],"payload":{"tag":"li","lines":"50,51"}},{"content":"Predictable, reliable","children":[],"payload":{"tag":"li","lines":"51,52"}}],"payload":{"tag":"h3","lines":"48,49"}},{"content":"Orchestrator-Workers (08)","children":[{"content":"The bridge between workflow and agent","children":[],"payload":{"tag":"li","lines":"53,54"}},{"content":"LLM plans, but code still runs the loop","children":[],"payload":{"tag":"li","lines":"54,55"}}],"payload":{"tag":"h3","lines":"52,53"}},{"content":"Agent Loop (11)","children":[{"content":"LLM controls the loop","children":[],"payload":{"tag":"li","lines":"56,57"}},{"content":"Steps NOT known upfront","children":[],"payload":{"tag":"li","lines":"57,58"}},{"content":"Flexible, exploratory","children":[],"payload":{"tag":"li","lines":"58,59"}}],"payload":{"tag":"h3","lines":"55,56"}},{"content":"Combine both","children":[{"content":"Agent loop at top level","children":[],"payload":{"tag":"li","lines":"60,61"}},{"content":"Uses workflow patterns inside each turn","children":[],"payload":{"tag":"li","lines":"61,62"}},{"content":"Chain, parallelize, evaluate as needed","children":[],"payload":{"tag":"li","lines":"62,64"}}],"payload":{"tag":"h3","lines":"59,60"}}],"payload":{"tag":"h2","lines":"47,48"}},{"content":"Common Pitfalls","children":[{"content":"No max iterations &#x2192; loops forever","children":[],"payload":{"tag":"li","lines":"65,66"}},{"content":"Too many tools &#x2192; LLM confused about which to pick","children":[],"payload":{"tag":"li","lines":"66,67"}},{"content":"No error handling &#x2192; retries same failure endlessly","children":[],"payload":{"tag":"li","lines":"67,68"}},{"content":"Context bloat &#x2192; large tool results eat the window","children":[],"payload":{"tag":"li","lines":"68,69"}},{"content":"Overusing agents &#x2192; use a workflow if steps are known","children":[],"payload":{"tag":"li","lines":"69,70"}}],"payload":{"tag":"h2","lines":"64,65"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>
