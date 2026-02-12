@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Building Simple Agents","children":[{"content":"The Three Layers","children":[{"content":"Loop","children":[{"content":"while stop_reason != end_turn","children":[],"payload":{"tag":"li","lines":"4,5"}},{"content":"~10 lines of code","children":[],"payload":{"tag":"li","lines":"5,6"}},{"content":"Feeds results back into next API call","children":[],"payload":{"tag":"li","lines":"6,8"}}],"payload":{"tag":"h3","lines":"3,4"}},{"content":"Tool Definitions + Executor","children":[{"content":"Python functions (what tools do)","children":[],"payload":{"tag":"li","lines":"9,10"}},{"content":"JSON schemas (how LLM knows to call them)","children":[],"payload":{"tag":"li","lines":"10,11"}},{"content":"The real work of building an agent","children":[],"payload":{"tag":"li","lines":"11,13"}}],"payload":{"tag":"h3","lines":"8,9"}},{"content":"System Prompt","children":[{"content":"Role, rules, behavior","children":[],"payload":{"tag":"li","lines":"14,15"}},{"content":"Grants autonomy: &quot;go figure it out&quot;","children":[],"payload":{"tag":"li","lines":"15,16"}},{"content":"Claude Code: agents/*.md files","children":[],"payload":{"tag":"li","lines":"16,18"}}],"payload":{"tag":"h3","lines":"13,14"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Claude Code vs Raw Python","children":[{"content":"Claude Code","children":[{"content":"Loop: built in","children":[],"payload":{"tag":"li","lines":"20,21"}},{"content":"Tools: MCP servers + built-in","children":[],"payload":{"tag":"li","lines":"21,22"}},{"content":"Prompt: markdown files","children":[],"payload":{"tag":"li","lines":"22,23"}},{"content":"You only configure behavior","children":[],"payload":{"tag":"li","lines":"23,25"}}],"payload":{"tag":"h3","lines":"19,20"}},{"content":"Raw Python","children":[{"content":"Loop: you write it","children":[],"payload":{"tag":"li","lines":"26,27"}},{"content":"Tools: Python functions + JSON schemas","children":[],"payload":{"tag":"li","lines":"27,28"}},{"content":"Prompt: system= string","children":[],"payload":{"tag":"li","lines":"28,29"}},{"content":"You build the full runtime","children":[],"payload":{"tag":"li","lines":"29,31"}}],"payload":{"tag":"h3","lines":"25,26"}}],"payload":{"tag":"h2","lines":"18,19"}},{"content":"Agent vs Chatbot Prompt","children":[{"content":"Chatbot","children":[{"content":"Answer this question","children":[],"payload":{"tag":"li","lines":"33,34"}},{"content":"One turn","children":[],"payload":{"tag":"li","lines":"34,35"}},{"content":"No tools, no loop","children":[],"payload":{"tag":"li","lines":"35,37"}}],"payload":{"tag":"h3","lines":"32,33"}},{"content":"Agent","children":[{"content":"Here&apos;s a goal + tools + rules","children":[],"payload":{"tag":"li","lines":"38,39"}},{"content":"Multi-turn loop","children":[],"payload":{"tag":"li","lines":"39,40"}},{"content":"Grants autonomy to decide steps","children":[],"payload":{"tag":"li","lines":"40,42"}}],"payload":{"tag":"h3","lines":"37,38"}}],"payload":{"tag":"h2","lines":"31,32"}},{"content":"Claude Code Configuration","children":[{"content":"CLAUDE.md","children":[{"content":"Always loaded","children":[],"payload":{"tag":"li","lines":"44,45"}},{"content":"Project-wide context and rules","children":[],"payload":{"tag":"li","lines":"45,47"}}],"payload":{"tag":"h3","lines":"43,44"}},{"content":"agents/*.md files","children":[{"content":"Loaded on demand","children":[],"payload":{"tag":"li","lines":"48,49"}},{"content":"Role-specific behavior","children":[],"payload":{"tag":"li","lines":"49,50"}},{"content":"Role, Responsibilities, Rules, Handoff","children":[],"payload":{"tag":"li","lines":"50,52"}}],"payload":{"tag":"h3","lines":"47,48"}}],"payload":{"tag":"h2","lines":"42,43"}},{"content":"Framework Landscape","children":[{"content":"Pydantic AI","children":[{"content":"Type-safe, Python-native","children":[],"payload":{"tag":"li","lines":"54,55"}},{"content":"Lightweight","children":[],"payload":{"tag":"li","lines":"55,56"}},{"content":"Clean DX","children":[],"payload":{"tag":"li","lines":"56,58"}}],"payload":{"tag":"h3","lines":"53,54"}},{"content":"Claude Agent SDK","children":[{"content":"Anthropic-made","children":[],"payload":{"tag":"li","lines":"59,60"}},{"content":"Claude-native handoffs","children":[],"payload":{"tag":"li","lines":"60,61"}},{"content":"Multi-agent support","children":[],"payload":{"tag":"li","lines":"61,63"}}],"payload":{"tag":"h3","lines":"58,59"}},{"content":"LangGraph","children":[{"content":"Graph-based workflows","children":[],"payload":{"tag":"li","lines":"64,65"}},{"content":"Stateful","children":[],"payload":{"tag":"li","lines":"65,66"}},{"content":"Most complex","children":[],"payload":{"tag":"li","lines":"66,68"}}],"payload":{"tag":"h3","lines":"63,64"}}],"payload":{"tag":"h2","lines":"52,53"}},{"content":"Why Raw Python First","children":[{"content":"All frameworks hide the same 3 layers","children":[],"payload":{"tag":"li","lines":"69,70"}},{"content":"Can&apos;t debug what you can&apos;t see","children":[],"payload":{"tag":"li","lines":"70,71"}},{"content":"Foundation before abstraction","children":[],"payload":{"tag":"li","lines":"71,72"}}],"payload":{"tag":"h2","lines":"68,69"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>

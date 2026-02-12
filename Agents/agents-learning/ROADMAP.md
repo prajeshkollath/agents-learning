@@ -22,7 +22,7 @@
 - [x] 10 - What makes an agent (tool use, loops, autonomy)
 - [x] 11 - Agent loops & workflows - observe → think → act → repeat
 - [x] 12 - MCP servers as agent tools
-- [ ] 13 - Building simple agents via Claude Code configuration
+- [x] 13 - Building simple agents via Claude Code configuration
 - [ ] 14 - State & memory - conversation history, summaries, persistent memory
 
 ## Phase 4: Python - Raw Building Blocks (No Frameworks)
@@ -46,9 +46,10 @@
 - [ ] 28 - Handoffs and coordination
 
 ## Phase 7: Frameworks (Only After Understanding the Internals)
-- [ ] 29 - Claude Agent SDK
-- [ ] 30 - LangChain / LangGraph overview
-- [ ] 31 - When to use frameworks vs raw code
+- [ ] 29 - Pydantic AI - type-safe agents, Python-native, lightweight framework
+- [ ] 30 - Claude Agent SDK
+- [ ] 31 - LangChain / LangGraph overview
+- [ ] 32 - When to use frameworks vs raw code
 
 ---
 
