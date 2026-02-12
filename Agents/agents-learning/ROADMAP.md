@@ -2,6 +2,7 @@
 
 > **Principle:** Build it raw first, understand the internals, then use frameworks.
 > **Progression:** Concepts → Claude Code → Raw Python → Frameworks
+> **Teaching note:** During Phase 4, each raw Python concept will be mapped to its equivalent in Pydantic AI, Claude Agent SDK, Google ADK, and LangGraph — so you see both layers simultaneously.
 
 ---
 
@@ -47,9 +48,10 @@
 
 ## Phase 7: Frameworks (Only After Understanding the Internals)
 - [ ] 29 - Pydantic AI - type-safe agents, Python-native, lightweight framework
-- [ ] 30 - Claude Agent SDK
-- [ ] 31 - LangChain / LangGraph overview
-- [ ] 32 - When to use frameworks vs raw code
+- [ ] 30 - Claude Agent SDK - Anthropic's official multi-agent framework
+- [ ] 31 - Google ADK (Agent Development Kit) - Google's agent framework, Gemini-native
+- [ ] 32 - LangChain / LangGraph overview - graph-based stateful workflows
+- [ ] 33 - When to use which framework - decision guide
 
 ---
 
