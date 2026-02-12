@@ -1,0 +1,36 @@
+mindmap
+  root((Gemini API))
+    Setup
+      pip install google-genai
+      API key from AI Studio
+      Use env var not hardcode
+    Client
+      genai.Client(api_key)
+      Created once
+    Basic Call
+      generate_content()
+      model + contents
+      response.text
+    Response Object
+      finish_reason
+        STOP normal
+        MAX_TOKENS limit hit
+        TOOL_CALLS use tool
+      usage_metadata
+        prompt_token_count
+        candidates_token_count
+    Config
+      system_instruction
+      max_output_tokens
+      temperature 0-2
+    Multi-Turn
+      Chat helper
+        client.chats.create()
+        Manages history
+      Raw history
+        history list
+        Send all turns every call
+        Agent loop foundation
+    Key Insight
+      Stateless by default
+      Memory = history list you build

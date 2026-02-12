@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Gemini API Basics","children":[{"content":"Setup","children":[{"content":"Install","children":[{"content":"pip install google-genai","children":[],"payload":{"tag":"li","lines":"4,5"}}],"payload":{"tag":"h3","lines":"3,4"}},{"content":"API Key","children":[{"content":"Google AI Studio &#x2014; free tier","children":[],"payload":{"tag":"li","lines":"6,7"}},{"content":"Always use env var, never hardcode","children":[],"payload":{"tag":"li","lines":"7,8"}},{"content":"os.environ.get(&quot;GEMINI_API_KEY&quot;)","children":[],"payload":{"tag":"li","lines":"8,10"}}],"payload":{"tag":"h3","lines":"5,6"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Client","children":[{"content":"genai.Client(api_key=...)","children":[],"payload":{"tag":"li","lines":"11,12"}},{"content":"Created once, reused for all calls","children":[],"payload":{"tag":"li","lines":"12,13"}},{"content":"ADK manages it automatically","children":[],"payload":{"tag":"li","lines":"13,15"}}],"payload":{"tag":"h2","lines":"10,11"}},{"content":"Basic Call","children":[{"content":"client.models.generate_content()","children":[],"payload":{"tag":"li","lines":"16,17"}},{"content":"model=&quot;gemini-2.0-flash&quot;","children":[],"payload":{"tag":"li","lines":"17,18"}},{"content":"contents= the user message","children":[],"payload":{"tag":"li","lines":"18,19"}},{"content":"response.text = shortcut to output","children":[],"payload":{"tag":"li","lines":"19,21"}}],"payload":{"tag":"h2","lines":"15,16"}},{"content":"Response Object","children":[{"content":"Text","children":[{"content":"response.text (shortcut)","children":[],"payload":{"tag":"li","lines":"23,24"}},{"content":"response.candidates[0].content.parts[0].text","children":[],"payload":{"tag":"li","lines":"24,25"}}],"payload":{"tag":"h3","lines":"22,23"}},{"content":"finish_reason","children":[{"content":"STOP = model done (normal)","children":[],"payload":{"tag":"li","lines":"26,27"}},{"content":"MAX_TOKENS = hit limit","children":[],"payload":{"tag":"li","lines":"27,28"}},{"content":"TOOL_CALLS = wants to call a tool","children":[],"payload":{"tag":"li","lines":"28,29"}}],"payload":{"tag":"h3","lines":"25,26"}},{"content":"Token Usage","children":[{"content":"response.usage_metadata.prompt_token_count","children":[],"payload":{"tag":"li","lines":"30,31"}},{"content":"response.usage_metadata.candidates_token_count","children":[],"payload":{"tag":"li","lines":"31,32"}},{"content":"Pydantic AI: result.usage()","children":[],"payload":{"tag":"li","lines":"32,33"}},{"content":"LangGraph: callback handler","children":[],"payload":{"tag":"li","lines":"33,35"}}],"payload":{"tag":"h3","lines":"29,30"}}],"payload":{"tag":"h2","lines":"21,22"}},{"content":"System Prompt","children":[{"content":"Goes in config= block","children":[],"payload":{"tag":"li","lines":"36,37"}},{"content":"types.GenerateContentConfig(system_instruction=...)","children":[],"payload":{"tag":"li","lines":"37,38"}},{"content":"max_output_tokens &#x2014; cap response length","children":[],"payload":{"tag":"li","lines":"38,39"}},{"content":"temperature 0-2 (Gemini range, not 0-1)","children":[],"payload":{"tag":"li","lines":"39,40"}},{"content":"ADK equivalent: LlmAgent(instruction=...)","children":[],"payload":{"tag":"li","lines":"40,42"}}],"payload":{"tag":"h2","lines":"35,36"}},{"content":"Multi-Turn","children":[{"content":"Chat Helper","children":[{"content":"client.chats.create()","children":[],"payload":{"tag":"li","lines":"44,45"}},{"content":"chat.send_message()","children":[],"payload":{"tag":"li","lines":"45,46"}},{"content":"Manages history internally","children":[],"payload":{"tag":"li","lines":"46,47"}},{"content":"chat.get_history() to inspect","children":[],"payload":{"tag":"li","lines":"47,49"}}],"payload":{"tag":"h3","lines":"43,44"}},{"content":"Raw Message History","children":[{"content":"history = [] list","children":[],"payload":{"tag":"li","lines":"50,51"}},{"content":"Append user Content, call API with full list","children":[],"payload":{"tag":"li","lines":"51,52"}},{"content":"Append model response back","children":[],"payload":{"tag":"li","lines":"52,53"}},{"content":"This IS the agent loop pattern","children":[],"payload":{"tag":"li","lines":"53,54"}},{"content":"LangGraph: MessagesState","children":[],"payload":{"tag":"li","lines":"54,55"}},{"content":"ADK: session.history","children":[],"payload":{"tag":"li","lines":"55,57"}}],"payload":{"tag":"h3","lines":"49,50"}}],"payload":{"tag":"h2","lines":"42,43"}},{"content":"Key Insight","children":[{"content":"Model has NO memory","children":[],"payload":{"tag":"li","lines":"58,59"}},{"content":"Every API call is stateless","children":[],"payload":{"tag":"li","lines":"59,60"}},{"content":"&quot;Memory&quot; = the history list you maintain","children":[],"payload":{"tag":"li","lines":"60,61"}},{"content":"You send the entire history every call","children":[],"payload":{"tag":"li","lines":"61,62"}}],"payload":{"tag":"h2","lines":"57,58"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>

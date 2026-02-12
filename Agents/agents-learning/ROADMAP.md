@@ -28,7 +28,7 @@
 - [x] 14 - State & memory - conversation history, summaries, persistent memory
 
 ## Phase 4: Python - Raw Building Blocks (No Frameworks)
-- [ ] 15 - Gemini API basics - google-genai SDK, raw calls, response object, multi-turn
+- [x] 15 - Gemini API basics - google-genai SDK, raw calls, response object, multi-turn
 - [ ] 16 - Prompt caching - cache_control, cost reduction, when and how to cache
 - [ ] 17 - Context window management - truncation, sliding window, auto-summarize (silent + prompted)
 - [ ] 18 - Building a prompt chain in Python

@@ -15,6 +15,7 @@
 #   - Multi-turn conversations
 # =============================================================================
 
+import os
 from google import genai
 from google.genai import types
 
@@ -24,7 +25,9 @@ from google.genai import types
 #      and reuse it for all calls. It holds your authentication.
 # -----------------------------------------------------------------------------
 
-API_KEY = "YOUR_API_KEY"  # Replace this, or use: os.environ["GEMINI_API_KEY"]
+# Load key from environment variable (safer than hardcoding)
+# Set it first: Windows → set GEMINI_API_KEY=your_key  |  Mac/Linux → export GEMINI_API_KEY=your_key
+API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_API_KEY")
 client = genai.Client(api_key=API_KEY)
 
 # FRAMEWORK EQUIVALENT:
