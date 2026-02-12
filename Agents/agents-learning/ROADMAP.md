@@ -28,7 +28,7 @@
 - [x] 14 - State & memory - conversation history, summaries, persistent memory
 
 ## Phase 4: Python - Raw Building Blocks (No Frameworks)
-- [ ] 15 - Claude API basics - raw SDK calls
+- [ ] 15 - Gemini API basics - google-genai SDK, raw calls, response object, multi-turn
 - [ ] 16 - Prompt caching - cache_control, cost reduction, when and how to cache
 - [ ] 17 - Context window management - truncation, sliding window, auto-summarize (silent + prompted)
 - [ ] 18 - Building a prompt chain in Python
@@ -36,7 +36,7 @@
 - [ ] 20 - State management - passing context between steps
 - [ ] 21 - Memory engineering - conversation memory, summary memory, vector/RAG basics
 - [ ] 22 - Building an agent loop from scratch in Python
-- [ ] 23 - Tool use with the Claude API
+- [ ] 23 - Tool use with the Gemini API - function calling, tool definitions, tool results
 
 ## Phase 5: Guardrails & Evals (Python)
 - [ ] 24 - Input guardrails - validation, injection detection, content filtering
