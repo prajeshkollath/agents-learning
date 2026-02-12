@@ -1,0 +1,33 @@
+mindmap
+  root((MCP))
+    Why MCP
+      Problem
+        Custom code per tool
+        Breaks on LLM switch
+      Solution
+        Universal protocol
+        USB for AI tools
+    3 Pieces
+      MCP Server
+        Exposes tools
+        memory-bank
+        mindmap
+      MCP Client
+        Connects to servers
+        Built into Claude Code
+      Host
+        Runs the LLM
+        Claude Code
+    What Servers Expose
+      Tools
+        Functions to call
+      Resources
+        Data to read
+      Prompts
+        Templates
+    Agent Loop Link
+      ACT phase calls tools
+      Add server = new powers
+    Key Insight
+      LLM sees tool list only
+      MCP is the plumbing

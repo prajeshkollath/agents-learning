@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script><script src="https://unpkg.com/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://unpkg.com/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"MCP Servers as Agent Tools","children":[{"content":"Why MCP","children":[{"content":"The Problem","children":[{"content":"Tools need to be defined, connected, and described to the LLM","children":[],"payload":{"tag":"li","lines":"4,5"}},{"content":"Without a standard: every tool integration is custom code","children":[],"payload":{"tag":"li","lines":"5,6"}},{"content":"Switching LLMs = rewriting all connectors","children":[],"payload":{"tag":"li","lines":"6,8"}}],"payload":{"tag":"h3","lines":"3,4"}},{"content":"The Solution","children":[{"content":"MCP = Model Context Protocol","children":[],"payload":{"tag":"li","lines":"9,10"}},{"content":"Universal standard for connecting LLMs to tools and data","children":[],"payload":{"tag":"li","lines":"10,11"}},{"content":"USB analogy: one standard plug, any device","children":[],"payload":{"tag":"li","lines":"11,13"}}],"payload":{"tag":"h3","lines":"8,9"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Three Key Pieces","children":[{"content":"MCP Server","children":[{"content":"Exposes tools, resources, prompts over the protocol","children":[],"payload":{"tag":"li","lines":"15,16"}},{"content":"Examples: memory-bank, mindmap, filesystem","children":[],"payload":{"tag":"li","lines":"16,18"}}],"payload":{"tag":"h3","lines":"14,15"}},{"content":"MCP Client","children":[{"content":"Connects to servers","children":[],"payload":{"tag":"li","lines":"19,20"}},{"content":"Surfaces available tools to the LLM","children":[],"payload":{"tag":"li","lines":"20,21"}},{"content":"Built into Claude Code","children":[],"payload":{"tag":"li","lines":"21,23"}}],"payload":{"tag":"h3","lines":"18,19"}},{"content":"Host","children":[{"content":"Application running the LLM","children":[],"payload":{"tag":"li","lines":"24,25"}},{"content":"Claude Code, Claude Desktop, etc.","children":[],"payload":{"tag":"li","lines":"25,27"}}],"payload":{"tag":"h3","lines":"23,24"}}],"payload":{"tag":"h2","lines":"13,14"}},{"content":"What Servers Expose","children":[{"content":"Tools","children":[{"content":"Functions the LLM can call","children":[],"payload":{"tag":"li","lines":"29,30"}},{"content":"create_entity, search_nodes, read_file","children":[],"payload":{"tag":"li","lines":"30,32"}}],"payload":{"tag":"h3","lines":"28,29"}},{"content":"Resources","children":[{"content":"Data the LLM can read","children":[],"payload":{"tag":"li","lines":"33,34"}},{"content":"Files, DB records, API responses","children":[],"payload":{"tag":"li","lines":"34,36"}}],"payload":{"tag":"h3","lines":"32,33"}},{"content":"Prompts","children":[{"content":"Reusable prompt templates","children":[],"payload":{"tag":"li","lines":"37,39"}}],"payload":{"tag":"h3","lines":"36,37"}}],"payload":{"tag":"h2","lines":"27,28"}},{"content":"Connection to Agent Loop","children":[{"content":"ACT Phase","children":[{"content":"MCP tools are what the agent calls during ACT","children":[],"payload":{"tag":"li","lines":"41,42"}},{"content":"Add MCP server = agent gets new capabilities instantly","children":[],"payload":{"tag":"li","lines":"42,44"}}],"payload":{"tag":"h3","lines":"40,41"}},{"content":"Dynamic Toolsets","children":[{"content":"No hardcoded tool lists","children":[],"payload":{"tag":"li","lines":"45,46"}},{"content":"Expandable at runtime","children":[],"payload":{"tag":"li","lines":"46,48"}}],"payload":{"tag":"h3","lines":"44,45"}}],"payload":{"tag":"h2","lines":"39,40"}},{"content":"This Project&apos;s MCP Servers","children":[{"content":"memory-bank","children":[{"content":"Tools: create_entities, search_nodes, read_graph","children":[],"payload":{"tag":"li","lines":"50,51"}},{"content":"Used by: Documenter to store learning progress","children":[],"payload":{"tag":"li","lines":"51,53"}}],"payload":{"tag":"h3","lines":"49,50"}},{"content":"mindmap","children":[{"content":"Tools: convert_markdown_to_mindmap","children":[],"payload":{"tag":"li","lines":"54,55"}},{"content":"Used by: Documenter to generate HTML mindmaps","children":[],"payload":{"tag":"li","lines":"55,57"}}],"payload":{"tag":"h3","lines":"53,54"}}],"payload":{"tag":"h2","lines":"48,49"}},{"content":"Key Insight","children":[{"content":"LLM doesn&apos;t know or care about MCP","children":[],"payload":{"tag":"li","lines":"58,59"}},{"content":"It just sees a list of tools with descriptions","children":[],"payload":{"tag":"li","lines":"59,60"}},{"content":"MCP handles the plumbing underneath","children":[],"payload":{"tag":"li","lines":"60,61"}}],"payload":{"tag":"h2","lines":"57,58"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>

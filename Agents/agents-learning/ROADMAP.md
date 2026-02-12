@@ -21,7 +21,7 @@
 ## Phase 3: Agents in Claude Code
 - [x] 10 - What makes an agent (tool use, loops, autonomy)
 - [x] 11 - Agent loops & workflows - observe → think → act → repeat
-- [ ] 12 - MCP servers as agent tools
+- [x] 12 - MCP servers as agent tools
 - [ ] 13 - Building simple agents via Claude Code configuration
 - [ ] 14 - State & memory - conversation history, summaries, persistent memory
 
