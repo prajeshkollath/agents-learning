@@ -28,30 +28,32 @@
 
 ## Phase 4: Python - Raw Building Blocks (No Frameworks)
 - [ ] 15 - Claude API basics - raw SDK calls
-- [ ] 16 - Building a prompt chain in Python
-- [ ] 17 - Building a workflow with routing in Python
-- [ ] 18 - State management - passing context between steps
-- [ ] 19 - Memory engineering - conversation memory, summary memory, vector/RAG basics
-- [ ] 20 - Building an agent loop from scratch in Python
-- [ ] 21 - Tool use with the Claude API
+- [ ] 16 - Prompt caching - cache_control, cost reduction, when and how to cache
+- [ ] 17 - Context window management - truncation, sliding window, auto-summarize (silent + prompted)
+- [ ] 18 - Building a prompt chain in Python
+- [ ] 19 - Building a workflow with routing in Python
+- [ ] 20 - State management - passing context between steps
+- [ ] 21 - Memory engineering - conversation memory, summary memory, vector/RAG basics
+- [ ] 22 - Building an agent loop from scratch in Python
+- [ ] 23 - Tool use with the Claude API
 
 ## Phase 5: Guardrails & Evals (Python)
-- [ ] 22 - Input guardrails - validation, injection detection, content filtering
-- [ ] 23 - Output guardrails - format checking, hallucination detection, safety
-- [ ] 24 - Evals - how to measure agent quality, benchmarking, test suites
-- [ ] 25 - Error handling & fallbacks in agent systems
+- [ ] 24 - Input guardrails - validation, injection detection, content filtering
+- [ ] 25 - Output guardrails - format checking, hallucination detection, safety
+- [ ] 26 - Evals - how to measure agent quality, benchmarking, test suites
+- [ ] 27 - Error handling & fallbacks in agent systems
 
 ## Phase 6: Multi-Agent Systems (Python)
-- [ ] 26 - Multi-agent patterns - delegation, debate, specialization
-- [ ] 27 - Shared state between agents
-- [ ] 28 - Handoffs and coordination
+- [ ] 28 - Multi-agent patterns - delegation, debate, specialization
+- [ ] 29 - Shared state between agents
+- [ ] 30 - Handoffs and coordination
 
 ## Phase 7: Frameworks (Only After Understanding the Internals)
-- [ ] 29 - Pydantic AI - type-safe agents, Python-native, lightweight framework
-- [ ] 30 - Claude Agent SDK - Anthropic's official multi-agent framework
-- [ ] 31 - Google ADK (Agent Development Kit) - Google's agent framework, Gemini-native
-- [ ] 32 - LangChain / LangGraph overview - graph-based stateful workflows
-- [ ] 33 - When to use which framework - decision guide
+- [ ] 31 - Pydantic AI - type-safe agents, Python-native, lightweight framework
+- [ ] 32 - Claude Agent SDK - Anthropic's official multi-agent framework
+- [ ] 33 - Google ADK (Agent Development Kit) - Google's agent framework, Gemini-native
+- [ ] 34 - LangChain / LangGraph overview - graph-based stateful workflows
+- [ ] 35 - When to use which framework - decision guide
 
 ---
 
