@@ -23,7 +23,7 @@
 - [x] 11 - Agent loops & workflows - observe → think → act → repeat
 - [x] 12 - MCP servers as agent tools
 - [x] 13 - Building simple agents via Claude Code configuration
-- [ ] 14 - State & memory - conversation history, summaries, persistent memory
+- [x] 14 - State & memory - conversation history, summaries, persistent memory
 
 ## Phase 4: Python - Raw Building Blocks (No Frameworks)
 - [ ] 15 - Claude API basics - raw SDK calls

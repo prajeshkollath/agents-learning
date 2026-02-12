@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"State &amp; Memory","children":[{"content":"Core Problem","children":[{"content":"Every API call is stateless","children":[{"content":"Fresh LLM, no history","children":[],"payload":{"tag":"li","lines":"4,5"}},{"content":"State = what agent knows now","children":[],"payload":{"tag":"li","lines":"5,6"}},{"content":"Memory = what agent can access from before","children":[],"payload":{"tag":"li","lines":"6,8"}}],"payload":{"tag":"h3","lines":"3,4"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"3 Memory Types","children":[{"content":"In-Context (State)","children":[{"content":"The messages array","children":[],"payload":{"tag":"li","lines":"10,11"}},{"content":"Automatic &#x2014; LLM sees all of it","children":[],"payload":{"tag":"li","lines":"11,12"}},{"content":"Limit: context window size","children":[],"payload":{"tag":"li","lines":"12,13"}},{"content":"Overflow strategies","children":[{"content":"Truncate oldest messages","children":[],"payload":{"tag":"li","lines":"14,15"}},{"content":"Summarize old messages","children":[],"payload":{"tag":"li","lines":"15,16"}},{"content":"Sliding window + summary","children":[],"payload":{"tag":"li","lines":"16,18"}}],"payload":{"tag":"li","lines":"13,18"}}],"payload":{"tag":"h3","lines":"9,10"}},{"content":"External (Long-Term)","children":[{"content":"Database, file, vector store","children":[],"payload":{"tag":"li","lines":"19,20"}},{"content":"Survives across sessions","children":[],"payload":{"tag":"li","lines":"20,21"}},{"content":"Manual retrieval required","children":[],"payload":{"tag":"li","lines":"21,22"}},{"content":"memory-bank MCP = live example","children":[],"payload":{"tag":"li","lines":"22,24"}}],"payload":{"tag":"h3","lines":"18,19"}},{"content":"In-Weights (Semantic)","children":[{"content":"LLM training knowledge","children":[],"payload":{"tag":"li","lines":"25,26"}},{"content":"Can&apos;t change at runtime","children":[],"payload":{"tag":"li","lines":"26,27"}},{"content":"Fixed foundation","children":[],"payload":{"tag":"li","lines":"27,29"}}],"payload":{"tag":"h3","lines":"24,25"}}],"payload":{"tag":"h2","lines":"8,9"}},{"content":"Long-Term Memory Uses","children":[{"content":"Personalization","children":[{"content":"User preferences","children":[],"payload":{"tag":"li","lines":"31,32"}},{"content":"Communication style","children":[],"payload":{"tag":"li","lines":"32,33"}},{"content":"Past decisions","children":[],"payload":{"tag":"li","lines":"33,34"}}],"payload":{"tag":"h3","lines":"30,31"}},{"content":"Continuity","children":[{"content":"Where we left off","children":[],"payload":{"tag":"li","lines":"35,36"}},{"content":"Ongoing task progress","children":[],"payload":{"tag":"li","lines":"36,37"}}],"payload":{"tag":"h3","lines":"34,35"}},{"content":"Domain Knowledge","children":[{"content":"Codebase architecture","children":[],"payload":{"tag":"li","lines":"38,39"}},{"content":"Customer profiles","children":[],"payload":{"tag":"li","lines":"39,40"}},{"content":"Research notes","children":[],"payload":{"tag":"li","lines":"40,41"}}],"payload":{"tag":"h3","lines":"37,38"}},{"content":"Avoiding Repetition","children":[{"content":"Errors already tried","children":[],"payload":{"tag":"li","lines":"42,43"}},{"content":"Questions already asked","children":[],"payload":{"tag":"li","lines":"43,44"}}],"payload":{"tag":"h3","lines":"41,42"}},{"content":"Multi-Agent Coordination","children":[{"content":"Agent A writes, Agent B reads","children":[],"payload":{"tag":"li","lines":"45,47"}}],"payload":{"tag":"h3","lines":"44,45"}}],"payload":{"tag":"h2","lines":"29,30"}},{"content":"What to Store","children":[{"content":"Rule-Based","children":[{"content":"Hardcode storage triggers","children":[],"payload":{"tag":"li","lines":"49,50"}},{"content":"After session ends","children":[],"payload":{"tag":"li","lines":"50,51"}},{"content":"When preference stated","children":[],"payload":{"tag":"li","lines":"51,52"}}],"payload":{"tag":"h3","lines":"48,49"}},{"content":"LLM-Judged","children":[{"content":"save_to_memory() tool","children":[],"payload":{"tag":"li","lines":"53,54"}},{"content":"Agent uses judgment","children":[],"payload":{"tag":"li","lines":"54,55"}}],"payload":{"tag":"h3","lines":"52,53"}},{"content":"Decision Filter","children":[{"content":"Reusable in future? &#x2192; store","children":[],"payload":{"tag":"li","lines":"56,57"}},{"content":"Moment-specific? &#x2192; skip","children":[],"payload":{"tag":"li","lines":"57,58"}},{"content":"Sensitive/PII? &#x2192; never store","children":[],"payload":{"tag":"li","lines":"58,60"}}],"payload":{"tag":"h3","lines":"55,56"}}],"payload":{"tag":"h2","lines":"47,48"}},{"content":"Retrieval Patterns","children":[{"content":"Exact Lookup","children":[{"content":"memory.get(&quot;user:prajesh:prefs&quot;)","children":[],"payload":{"tag":"li","lines":"62,63"}},{"content":"Structured, predictable data","children":[],"payload":{"tag":"li","lines":"63,64"}}],"payload":{"tag":"h3","lines":"61,62"}},{"content":"Semantic Search","children":[{"content":"Query &#x2192; vector embedding","children":[],"payload":{"tag":"li","lines":"65,66"}},{"content":"Find closest by meaning","children":[],"payload":{"tag":"li","lines":"66,67"}},{"content":"RAG pattern &#x2014; Topic 19","children":[],"payload":{"tag":"li","lines":"67,68"}}],"payload":{"tag":"h3","lines":"64,65"}},{"content":"Structured Query","children":[{"content":"Filter by type, time, category","children":[],"payload":{"tag":"li","lines":"69,71"}}],"payload":{"tag":"h3","lines":"68,69"}}],"payload":{"tag":"h2","lines":"60,61"}},{"content":"Memory Cycle","children":[{"content":"Start of session","children":[{"content":"Query relevant memories","children":[],"payload":{"tag":"li","lines":"73,74"}},{"content":"Inject top 3-5 into system prompt","children":[],"payload":{"tag":"li","lines":"74,75"}}],"payload":{"tag":"h3","lines":"72,73"}},{"content":"During session","children":[{"content":"Agent uses context + memory","children":[],"payload":{"tag":"li","lines":"76,77"}}],"payload":{"tag":"h3","lines":"75,76"}},{"content":"End of session","children":[{"content":"Summarize and write new learnings back","children":[],"payload":{"tag":"li","lines":"78,80"}}],"payload":{"tag":"h3","lines":"77,78"}}],"payload":{"tag":"h2","lines":"71,72"}},{"content":"Summarization Pattern","children":[{"content":"Raw conversation &#x2192; LLM summarizes","children":[],"payload":{"tag":"li","lines":"81,82"}},{"content":"Store summary, discard transcript","children":[],"payload":{"tag":"li","lines":"82,83"}},{"content":"Summary memory &#x2014; covered in Topic 19","children":[],"payload":{"tag":"li","lines":"83,84"}}],"payload":{"tag":"h2","lines":"80,81"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>
