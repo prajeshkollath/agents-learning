@@ -2,7 +2,8 @@
 
 > **Principle:** Build it raw first, understand the internals, then use frameworks.
 > **Progression:** Concepts → Claude Code → Raw Python → Frameworks
-> **Teaching note:** During Phase 4, each raw Python concept will be mapped to its equivalent in Pydantic AI, Claude Agent SDK, Google ADK, and LangGraph — so you see both layers simultaneously.
+> **Teaching note:** During Phase 4, each raw Python concept will be mapped to its framework equivalent in Pydantic AI, LangGraph, and Google ADK — so you see raw internals and framework abstractions side by side.
+> **Phase 4 API:** Exercises use the Gemini API (google-genai SDK) via Google AI Studio free tier (Gemini 2.0 Flash). This also prepares directly for Google ADK in Phase 7.
 
 ---
 
@@ -50,10 +51,9 @@
 
 ## Phase 7: Frameworks (Only After Understanding the Internals)
 - [ ] 31 - Pydantic AI - type-safe agents, Python-native, lightweight framework
-- [ ] 32 - Claude Agent SDK - Anthropic's official multi-agent framework
-- [ ] 33 - Google ADK (Agent Development Kit) - Google's agent framework, Gemini-native
-- [ ] 34 - LangChain / LangGraph overview - graph-based stateful workflows
-- [ ] 35 - When to use which framework - decision guide
+- [ ] 32 - Google ADK (Agent Development Kit) - Google's agent framework, Gemini-native
+- [ ] 33 - LangChain / LangGraph overview - graph-based stateful workflows
+- [ ] 34 - When to use which framework - decision guide
 
 ---
 
