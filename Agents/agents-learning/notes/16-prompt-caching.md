@@ -17,18 +17,46 @@ Gemini stores the KV (key-value) computation for a stable prefix. On subsequent 
 ### 1. Implicit Caching (Automatic)
 - Gemini detects repeated prefixes server-side and caches them automatically
 - No code change required — you just send the same large prefix repeatedly
-- **Frequency-dependent, not just token-dependent** — needs to observe the prefix being sent multiple times before deciding to cache
+- **Frequency-dependent, not just token-dependent** — needs to observe the prefix being sent many times before deciding to cache
 - `cached_content_token_count` in `usage_metadata` will be `None` if not triggered, `> 0` if it was a cache hit
 - Free tier: unreliable — implicit caching may not trigger even above the token threshold
 - Not suitable for production use cases where you need guaranteed cache hits
+
+**What counts as the "prefix":**
+Implicit caching applies to **any stable prefix** — not just the system prompt. It applies to conversation turns too:
+```
+[system_instruction]   ← cached if stable and large enough
+[turn 1 user]          ← cached once it's been stable across several calls
+[turn 1 model]         ← cached once stable
+[NEW TURN user]        ← always fresh — prefix ends here
+```
+The cached portion must be **byte-for-byte identical** across calls. Changing anything mid-history (even one token) busts the cache at that point and everything after it.
+
+**Likelihood by call volume:**
+| Calls with same prefix | Implicit cache triggers? |
+|---|---|
+| 2 calls | Probably not |
+| 50 calls in a session | Likely |
+| 1000 users/day with same prefix | Almost certainly |
+| Free tier, low volume | Unreliable |
+
+Google's implicit cache is tuned for high-volume production traffic — not personal dev accounts.
 
 ### 2. Explicit Caching (Manual with TTL)
 - You call `client.caches.create()`, Gemini stores the content and returns a cache name
 - Reference the cache by name in subsequent calls via `cached_content=cache.name`
 - **Guaranteed cache hit** as long as TTL hasn't expired
-- Minimum size: **4096 tokens** for gemini-2.0-flash (the API will error if below this)
 - Default TTL: 1 hour. Minimum TTL: 60 seconds. Can be extended before expiry.
 - You pay a small storage fee per cached token per hour — delete when done
+
+**Minimum token requirements (hard platform limits — not configurable by you):**
+| Model | Minimum for explicit caching |
+|---|---|
+| `gemini-2.0-flash` | 4,096 tokens |
+| `gemini-1.5-flash` | 4,096 tokens |
+| `gemini-1.5-pro` | 32,768 tokens |
+
+These are Google-imposed floors. You cannot lower them. If your content is below the threshold, the API returns an error with the actual minimum — always check the error message rather than assuming the documented number.
 
 ---
 
@@ -91,6 +119,23 @@ client.caches.delete(name=cache.name)
 | Per-user unique conversation history | Don't cache | Dynamic content, not reusable |
 | Dev/testing with large context | Explicit short TTL | Save costs during iteration |
 
+**PDF upload scenario (exact flow):**
+The same user uploads a PDF and asks multiple questions about it. The trigger is the upload event — not the first question:
+```
+User uploads PDF
+  → your app detects upload
+  → immediately calls client.caches.create(pdf_content)
+  → Gemini stores it, returns cache.name
+User asks question 1 → send: cached_content=cache.name + "Q1"
+User asks question 2 → send: cached_content=cache.name + "Q2"
+...
+User asks question 20 → send: cached_content=cache.name + "Q20"
+```
+Without caching, every question re-sends the full PDF. With explicit cache, the PDF is paid once at creation; each question pays only for its own tokens.
+
+**RAG caching pattern:**
+Only worth doing if your knowledge base is small and fixed (e.g., a product manual always fully loaded into context). For typical RAG where different queries retrieve different chunks — retrieval is dynamic and per-chunk caching adds complexity that rarely pays off. Implicit caching handles frequently-retrieved shared chunks naturally.
+
 ---
 
 ## Key Learnings from Running the Code
@@ -103,12 +148,37 @@ client.caches.delete(name=cache.name)
 
 ---
 
+## Who Controls Caching: Product vs Builder
+
+This is an important layering distinction that came up when asking about GitHub Copilot:
+
+| Layer | Who controls caching |
+|---|---|
+| GitHub Copilot using Claude | GitHub controls it — you don't |
+| Claude Code (Claude Max subscription) | Anthropic/Claude Code handles it — you don't |
+| Your own agent hitting Gemini API | **You control it** |
+| Your own agent hitting Anthropic API | **You control it** (explicit `cache_control` needed) |
+
+When you are a **user** of a product (Copilot, Claude Code), caching is the product's problem. When you are a **builder** hitting an API directly, caching is your responsibility.
+
+GitHub Copilot almost certainly implements caching at scale (economics force it), but you have no visibility into or control over it.
+
+---
+
 ## Framework Equivalent
 
-All frameworks benefit from Gemini's implicit caching automatically (since they just send the same prefix). For explicit caching:
-- **Google ADK**: use `CachedContent` with session-level configuration — ADK can reference caches across agents in a multi-agent system
-- **Pydantic AI**: pass cache name through model settings
-- **LangGraph**: inject `cached_content` into the model config at the graph level
+**For Gemini (implicit):** all frameworks get it for free — Gemini handles it server-side regardless of which framework sends the request.
+
+**For Gemini (explicit):** frameworks don't add explicit caching automatically. You create the cache and pass `cache.name` through the framework's model config.
+
+**For Anthropic API:** caching is **always explicit** — you must add `cache_control: {"type": "ephemeral"}` markers to message content. Frameworks generally do not add these automatically.
+
+```python
+# Anthropic explicit caching — you must mark it yourself
+{"type": "text", "text": "...large content...", "cache_control": {"type": "ephemeral"}}
+```
+
+**LangChain "semantic caching"** — this is a completely different concept. It caches entire LLM responses locally: if the same input is sent again, it returns the cached output without calling the API at all. This is not the same as Anthropic or Gemini prompt prefix caching.
 
 ---
 
