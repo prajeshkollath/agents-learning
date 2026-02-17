@@ -1,0 +1,44 @@
+flowchart TD
+    subgraph INPUT["Before Each API Call"]
+        A[Count tokens in context] --> B{Over budget?}
+        B -->|No| C[Send as-is]
+        B -->|Yes| D{Which strategy?}
+    end
+
+    subgraph STRATEGIES["Context Management Strategies"]
+        D -->|Simple| E[Truncation]
+        D -->|Predictable| F[Sliding Window]
+        D -->|Smart| G[Summarization]
+        D -->|Production| H[Hybrid]
+
+        E --> E1[Drop oldest turn pairs]
+        F --> F1[Keep last N turns]
+        G --> G1[LLM compresses old turns]
+        G1 --> G2[Replace old turns with summary]
+        H --> H1[Summarize old + keep recent verbatim]
+    end
+
+    subgraph CONTEXT["What Gets Sent to API"]
+        E1 --> CTX
+        F1 --> CTX
+        G2 --> CTX
+        H1 --> CTX
+        C --> CTX
+
+        CTX[Build Context] --> SYS[System Prompt - always kept]
+        CTX --> SUM[Summary - if summarized]
+        CTX --> REC[Recent Turns - verbatim]
+        CTX --> NEW[New Message]
+    end
+
+    subgraph CACHE["Caching Integration - Topic 16"]
+        SYS -.->|Stable, cacheable| CACHED[Explicit Cache]
+        SUM -.->|Small, changes| FRESH[Fresh Tokens]
+        REC -.->|Changes every turn| FRESH
+        NEW -.->|Always fresh| FRESH
+    end
+
+    CTX --> API[Send to Gemini API]
+    API --> CHECK{Response OK?}
+    CHECK -->|Yes| DONE[Return response]
+    CHECK -->|Error: too many tokens| FAIL[Your code failed to manage the window]

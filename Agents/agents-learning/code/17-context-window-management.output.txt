@@ -1,0 +1,139 @@
+======================================================================
+TOPIC 17: Context Window Management
+======================================================================
+
+======================================================================
+PART 1: Token Counting
+======================================================================
+
+Exact token count (via API): 502
+Character count: 2250
+Actual ratio: 4.5 chars per token
+
+Estimated token count (~4 chars/token): 562
+Estimation error: 60 tokens (12.0%)
+
+======================================================================
+PART 2: Truncation Strategy
+======================================================================
+
+Original history: 16 messages (8 turns)
+  Truncating: dropping 5 oldest turn pairs
+After truncation (keep last 3 turns): 6 messages
+Oldest remaining turn: 'What is a generator?...'
+
+Question: 'Can you remind me what we discussed about variables?'
+Model's answer (with truncation — early context lost):
+  We discussed generators (yield values one at a time), async/await (pausing for I/O), and context managers (automatic setup/teardown with 'with').
+  Tokens used: 109 prompt, 37 response
+
+======================================================================
+PART 3: Sliding Window Strategy
+======================================================================
+
+Token budget: 300 tokens
+Turns that fit: 8
+Estimated tokens used: 246
+Oldest kept: 'What is a variable in Python?...'
+Newest kept: 'What is a context manager?...'
+
+======================================================================
+PART 4: Auto-Summarization Strategy
+======================================================================
+
+Summarizing 6 old turn pairs...
+
+Generated summary:
+  "The conversation covered fundamental Python concepts: variables, functions, classes, inheritance, decorators, and generators. The assistant provided concise definitions for each concept, explaining their purpose and key characteristics like using "def" for functions and "yield" for generators. No decisions were made; it was a purely informational exchange."
+
+Question: 'Can you remind me what we discussed about variables?'
+Model's answer (with summarization — old context preserved):
+  Variables store data values; you assign a value to a variable name, and its type is dynamically inferred in Python.
+  Tokens used: 159 prompt, 24 response
+
+======================================================================
+PART 5: Hybrid Strategy (Summary + Sliding Window)
+======================================================================
+
+  User: What is a variable?
+  Model: A variable is a named storage location in a computer's memory that holds a value. You can think of it as a container that can store different types of data, like numbers, text, or lists.
+  [Tokens: 21 prompt, 43 response | History: 1 total turns, 1 in window]
+
+  User: What is a list?
+  Model: A list is a versatile, ordered collection of items that can be of different data types, like numbers, strings, or even other lists. Lists are mutable, meaning you can change their contents after creation by adding, removing, or modifying elements.
+  [Tokens: 68 prompt, 50 response | History: 2 total turns, 2 in window]
+
+  User: What is a dictionary?
+  Model: A dictionary is a data structure that stores data in key-value pairs, where each key is unique and used to access its corresponding value. Dictionaries are useful for representing relationships between pieces of data and offer fast lookups based on keys.
+  [Tokens: 122 prompt, 49 response | History: 3 total turns, 3 in window]
+
+  User: How do I write a for loop?
+  Model: A for loop iterates over a sequence (like a list, tuple, or string) and executes a block of code for each item in the sequence. The basic structure is `for item in sequence:`, followed by an indented block of code to be executed.
+  [Tokens: 178 prompt, 53 response | History: 4 total turns, 4 in window]
+
+  User: What is a function?
+  Model: A function is a reusable block of code that performs a specific task. It can accept inputs (arguments), process them, and return an output.
+  [Tokens: 235 prompt, 30 response | History: 5 total turns, 5 in window]
+
+  User: What about lambda functions?
+
+  [Auto-compressing: summarizing 3 turns, keeping 3 recent turns]
+  [New summary: "The user inquired about the definitions of variables, lists, and dictionaries in programming. The assistant explained that a variable is a named storage location, a list is an ordered collection of items, and a dictionary stores data in key-value pairs for fast lookups."]
+  Model: Lambda functions are small, anonymous functions defined using the `lambda` keyword, typically used for short, simple operations. They can take any number of arguments but can only contain one expression.
+  [Tokens: 269 prompt, 38 response | History: 6 total turns, 3 in window, has summary]
+
+  User: What is a class?
+  Model: A class is a blueprint for creating objects, defining their properties (attributes) and behaviors (methods). It's a way to structure and organize code in object-oriented programming.
+  [Tokens: 226 prompt, 37 response | History: 7 total turns, 4 in window, has summary]
+
+  User: Now remind me — what did we say about variables at the start?
+  Model: A variable is a named storage location in a computer's memory used to hold a value (like a number, string, or object). You can think of it as a container for data that can be referenced and modified throughout a program.
+  [Tokens: 276 prompt, 49 response | History: 8 total turns, 5 in window, has summary]
+
+======================================================================
+PART 6: Strategy Comparison
+======================================================================
+
+Strategy          | Complexity  | Context Loss | Extra API Cost
+------------------|-------------|--------------|----------------
+Truncation        | Trivial     | Total        | None
+Sliding Window    | Simple      | Total        | None
+Summarization     | Moderate    | Partial      | 1 call/compress
+Hybrid            | Moderate    | Minimal      | 1 call/compress
+
+WHEN TO USE WHAT:
+- Truncation/Sliding Window: Short conversations, cost-sensitive, context
+  doesn't matter (e.g., one-shot Q&A bot)
+- Summarization: Long conversations where users reference earlier context
+  (e.g., tutoring, customer support)
+- Hybrid: Production chat systems — best balance of cost and quality
+
+REAL-WORLD EXAMPLES:
+- ChatGPT: Uses a form of hybrid (sliding window + summary/compression)
+- Claude: Uses context window management internally for long conversations
+- Customer support bots: Often use sliding window (last 5-10 turns)
+- Coding assistants: Prioritize recent code context, summarize older discussion
+
+======================================================================
+KEY TAKEAWAYS
+======================================================================
+
+1. PROBLEM: Context windows have hard limits. Even below limits, more
+   tokens = more cost + slower responses.
+
+2. TOKEN COUNTING: Use count_tokens() for precision, len//4 for estimates.
+
+3. TRUNCATION: Drop oldest turns. Simple but loses all old context.
+
+4. SLIDING WINDOW: Keep last N turns. Same as truncation with a fixed N.
+
+5. SUMMARIZATION: Use the LLM to compress old turns into a summary.
+   Preserves context but costs an extra API call per compression.
+
+6. HYBRID (production pattern): Summary of old + verbatim recent turns.
+   This is what LangChain's ConversationSummaryBufferMemory does.
+
+7. CACHING + CONTEXT MANAGEMENT work together:
+   Cache the stable prefix (system prompt, summary).
+   Manage the growing part (conversation history).
+

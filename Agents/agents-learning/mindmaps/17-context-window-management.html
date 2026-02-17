@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Context Window Management","children":[{"content":"Why It Matters","children":[{"content":"Hard token limit per model","children":[],"payload":{"tag":"h3","lines":"3,4"}},{"content":"Exceeding = API error (no partial response)","children":[],"payload":{"tag":"h3","lines":"4,5"}},{"content":"More tokens = more cost + slower responses","children":[],"payload":{"tag":"h3","lines":"5,6"}},{"content":"Your code must prevent overflow","children":[],"payload":{"tag":"h3","lines":"6,7"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Token Counting","children":[{"content":"Exact: count_tokens() API","children":[],"payload":{"tag":"h3","lines":"9,10"}},{"content":"Estimate: len(text) // 4","children":[],"payload":{"tag":"h3","lines":"10,11"}},{"content":"~4.5 chars/token for English","children":[],"payload":{"tag":"h3","lines":"11,12"}},{"content":"Estimate good for thresholds, not precision","children":[],"payload":{"tag":"h3","lines":"12,13"}}],"payload":{"tag":"h2","lines":"8,9"}},{"content":"Strategy 1: Truncation","children":[{"content":"Drop oldest turns when over budget","children":[],"payload":{"tag":"h3","lines":"15,16"}},{"content":"Always keep system prompt","children":[],"payload":{"tag":"h3","lines":"16,17"}},{"content":"Must drop complete turn pairs","children":[],"payload":{"tag":"h3","lines":"17,18"}},{"content":"Simple but total context loss","children":[],"payload":{"tag":"h3","lines":"18,19"}}],"payload":{"tag":"h2","lines":"14,15"}},{"content":"Strategy 2: Sliding Window","children":[{"content":"Keep last N turns (fixed rule)","children":[],"payload":{"tag":"h3","lines":"21,22"}},{"content":"Turn-based or token-based","children":[],"payload":{"tag":"h3","lines":"22,23"}},{"content":"Token-based more precise (turns vary in length)","children":[],"payload":{"tag":"h3","lines":"23,24"}},{"content":"Same loss as truncation, just more predictable","children":[],"payload":{"tag":"h3","lines":"24,25"}}],"payload":{"tag":"h2","lines":"20,21"}},{"content":"Strategy 3: Summarization","children":[{"content":"LLM compresses old turns into summary","children":[],"payload":{"tag":"h3","lines":"27,28"}},{"content":"Silent: auto-triggered, user never sees","children":[],"payload":{"tag":"h3","lines":"28,29"}},{"content":"Prompted: explicit summarize request","children":[],"payload":{"tag":"h3","lines":"29,30"}},{"content":"Costs extra API call per compression","children":[],"payload":{"tag":"h3","lines":"30,31"}},{"content":"Preserves old context in compressed form","children":[],"payload":{"tag":"h3","lines":"31,32"}}],"payload":{"tag":"h2","lines":"26,27"}},{"content":"Hybrid Pattern (Production)","children":[{"content":"System prompt (always kept)","children":[],"payload":{"tag":"h3","lines":"34,35"}},{"content":"Summary of old turns (compressed)","children":[],"payload":{"tag":"h3","lines":"35,36"}},{"content":"Recent turns verbatim (sliding window)","children":[],"payload":{"tag":"h3","lines":"36,37"}},{"content":"New message (current)","children":[],"payload":{"tag":"h3","lines":"37,38"}},{"content":"LangChain: ConversationSummaryBufferMemory","children":[],"payload":{"tag":"h3","lines":"38,39"}}],"payload":{"tag":"h2","lines":"33,34"}},{"content":"Summarization Triggers","children":[{"content":"By turn count","children":[],"payload":{"tag":"h3","lines":"41,42"}},{"content":"By token count","children":[],"payload":{"tag":"h3","lines":"42,43"}},{"content":"By percentage of window","children":[],"payload":{"tag":"h3","lines":"43,44"}},{"content":"Depends on use case","children":[],"payload":{"tag":"h3","lines":"44,45"}}],"payload":{"tag":"h2","lines":"40,41"}},{"content":"Window Full = Hard Error","children":[{"content":"API rejects the call","children":[],"payload":{"tag":"h3","lines":"47,48"}},{"content":"Must reserve room for response","children":[],"payload":{"tag":"h3","lines":"48,49"}},{"content":"Your code is the safety net","children":[],"payload":{"tag":"h3","lines":"49,50"}}],"payload":{"tag":"h2","lines":"46,47"}},{"content":"Interaction with Caching","children":[{"content":"Summarization breaks cache prefix","children":[],"payload":{"tag":"h3","lines":"52,53"}},{"content":"Implicit cache: one prefix that grows (extends, not overwrites)","children":[],"payload":{"tag":"h3","lines":"53,54"}},{"content":"Explicit cache: fixed at creation, never grows","children":[],"payload":{"tag":"h3","lines":"54,55"}},{"content":"Cache saves money, not space","children":[],"payload":{"tag":"h3","lines":"55,56"}},{"content":"Summary goes as fresh tokens (small, changes often)","children":[],"payload":{"tag":"h3","lines":"56,57"}},{"content":"One cached_content per API call only","children":[],"payload":{"tag":"h3","lines":"57,58"}}],"payload":{"tag":"h2","lines":"51,52"}},{"content":"Products Handle It Too","children":[{"content":"Claude Code: silent summarization","children":[],"payload":{"tag":"h3","lines":"60,61"}},{"content":"Repeated compression loses detail over time","children":[],"payload":{"tag":"h3","lines":"61,62"}},{"content":"Eventually start new conversation","children":[],"payload":{"tag":"h3","lines":"62,63"}},{"content":"RAG on history is most sophisticated (Topic 21)","children":[],"payload":{"tag":"h3","lines":"63,64"}}],"payload":{"tag":"h2","lines":"59,60"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>
