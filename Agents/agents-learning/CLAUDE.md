@@ -60,6 +60,7 @@ All agents should read:
 - The Tutor only teaches topics the Planner has queued
 - The Evaluator reports gaps back so the Planner can adjust
 - The Documenter only records the learner's own understanding, not generic content
+- The Documenter must include Q&A insights in notes — every question that changed or deepened understanding belongs in the notes, not just the Tutor's initial explanation
 - No web research unless the learner explicitly asks for it
 - Start simple, add complexity only when the learner is ready
 
