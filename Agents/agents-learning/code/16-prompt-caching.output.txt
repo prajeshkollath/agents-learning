@@ -1,0 +1,51 @@
+=== SECTION 2: Checking Cache Status in usage_metadata ===
+
+--- Call 1 (cold) ---
+Answer: The three core components of any agent are:
+
+1.  A loop
+2.  A model
+3.  Tools
+
+These components enable the agent to perceive its environment, reason about it, and take actions to achieve a goal. (Section 1)
+
+Total input tokens:  4221
+Cached tokens:       None
+
+--- Call 2 (should hit cache) ---
+Answer: External memory is a database outside the model (vector DB, SQL, key-value store) that the agent can query and inject relevant results into the context, and it survives across sessions. In-context state refers to the messages array sent with every API call, serving as short-term memory that disappears when the session ends.
+
+Total input tokens:  4226
+Cached tokens:       None
+
+=== SECTION 3: Explicit Cache with TTL ===
+
+Creating explicit cache...
+Cache created: cachedContents/k1oklnpbotmnvq7fjbf7wz0yfknf5m44hg6tporz
+Expires:       2026-02-17 01:53:10.440215+00:00
+
+Q1: What is the difference between Pydantic AI and LangGraph?
+     Answer: Pydantic AI is lightweight and Pythonic, emphasizing type-safe tool arguments and structured outputs, making it suitable...
+     Tokens — Fresh (full price): 13 | Cached (cheap): 4213
+
+Q2: What strategies help manage token costs in agent loops?
+     Answer: To manage token costs in agent loops, you can:
+
+1.  **Cache stable prefixes:** Cache the system prompt and documents to ...
+     Tokens — Fresh (full price): 10 | Cached (cheap): 4213
+
+Q3: Explain tool use — does the model call the tool directly?
+     Answer: The provided document states that you should tell the agent exactly when and how to use each tool. For example, "Always ...
+     Tokens — Fresh (full price): 12 | Cached (cheap): 4213
+
+
+=== SECTION 4: Cache Management ===
+
+--- Active caches ---
+  Name: cachedContents/k1oklnpbotmnvq7fjbf7wz0yfknf5m44hg6tporz
+  Display: agent-dev-guide-cache
+  Expires: 2026-02-17 01:53:10.440215+00:00
+
+TTL extended to 10 minutes.
+Cache deleted: cachedContents/k1oklnpbotmnvq7fjbf7wz0yfknf5m44hg6tporz
+Caches remaining: 0

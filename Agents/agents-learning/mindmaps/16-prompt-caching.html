@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script><script src="https://unpkg.com/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://unpkg.com/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Prompt Caching","children":[{"content":"Why Cache?","children":[{"content":"API is stateless &#x2014; full context sent every call","children":[],"payload":{"tag":"li","lines":"3,4"}},{"content":"5k token system prompt &#xd7; 20 turns = 100k tokens billed","children":[],"payload":{"tag":"li","lines":"4,5"}},{"content":"Fresh: &#x24;0.10/MTok &#x2192; Cached: &#x24;0.025/MTok (4x cheaper)","children":[],"payload":{"tag":"li","lines":"5,7"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Two Types","children":[{"content":"Implicit (Automatic)","children":[{"content":"Gemini detects repeated prefixes server-side","children":[],"payload":{"tag":"li","lines":"10,11"}},{"content":"No code change needed","children":[],"payload":{"tag":"li","lines":"11,12"}},{"content":"Frequency-dependent not just token-size-dependent","children":[],"payload":{"tag":"li","lines":"12,13"}},{"content":"Free tier: unreliable &#x2014; may not trigger","children":[],"payload":{"tag":"li","lines":"13,14"}},{"content":"Check: <code>cached_content_token_count</code> in usage_metadata","children":[{"content":"None = no hit","children":[],"payload":{"tag":"li","lines":"15,16"}},{"content":"\n<blockquote data-lines=\"16,17\">\n<p data-lines=\"16,17\">0 = cache hit</p>\n</blockquote>","children":[],"payload":{"tag":"li","lines":"16,18"}}],"payload":{"tag":"li","lines":"14,18"}}],"payload":{"tag":"h3","lines":"9,10"}},{"content":"Explicit (Manual + TTL)","children":[{"content":"You control what gets cached and for how long","children":[],"payload":{"tag":"li","lines":"19,20"}},{"content":"<code>client.caches.create()</code> &#x2192; returns cache name","children":[],"payload":{"tag":"li","lines":"20,21"}},{"content":"Reference with <code>cached_content=cache.name</code>","children":[],"payload":{"tag":"li","lines":"21,22"}},{"content":"Guaranteed hit within TTL","children":[],"payload":{"tag":"li","lines":"22,23"}},{"content":"Minimum: 4096 tokens (gemini-2.0-flash)","children":[],"payload":{"tag":"li","lines":"23,24"}},{"content":"Default TTL: 1 hour","children":[],"payload":{"tag":"li","lines":"24,25"}},{"content":"Small storage fee per hour &#x2192; delete when done","children":[],"payload":{"tag":"li","lines":"25,27"}}],"payload":{"tag":"h3","lines":"18,19"}}],"payload":{"tag":"h2","lines":"7,8"}},{"content":"Token Counting (Important!)","children":[{"content":"Implicit: <code>prompt_token_count</code> = ALL tokens; <code>cached_content_token_count</code> = cache hit","children":[],"payload":{"tag":"li","lines":"28,29"}},{"content":"Explicit: <code>prompt_token_count</code> = FRESH tokens ONLY; <code>cached_content_token_count</code> = cached","children":[],"payload":{"tag":"li","lines":"29,30"}},{"content":"Do NOT subtract: total cost = fresh (full price) + cached (cheap)","children":[],"payload":{"tag":"li","lines":"30,32"}}],"payload":{"tag":"h2","lines":"27,28"}},{"content":"Cache Management API","children":[{"content":"Create: <code>client.caches.create()</code>","children":[],"payload":{"tag":"li","lines":"33,34"}},{"content":"List: <code>client.caches.list()</code>","children":[],"payload":{"tag":"li","lines":"34,35"}},{"content":"Extend TTL: <code>client.caches.update()</code>","children":[],"payload":{"tag":"li","lines":"35,36"}},{"content":"Delete: <code>client.caches.delete()</code>","children":[],"payload":{"tag":"li","lines":"36,38"}}],"payload":{"tag":"h2","lines":"32,33"}},{"content":"When to Use","children":[{"content":"Large system prompt + many users &#x2192; implicit","children":[],"payload":{"tag":"li","lines":"39,40"}},{"content":"Document upload &#x2192; explicit on upload event","children":[],"payload":{"tag":"li","lines":"40,41"}},{"content":"Codebase review &#x2192; explicit","children":[],"payload":{"tag":"li","lines":"41,42"}},{"content":"Batch processing &#x2192; explicit covering full batch TTL","children":[],"payload":{"tag":"li","lines":"42,43"}},{"content":"Dev/testing &#x2192; explicit short TTL","children":[],"payload":{"tag":"li","lines":"43,44"}},{"content":"Per-user history &#x2192; do NOT cache (dynamic)","children":[],"payload":{"tag":"li","lines":"44,46"}}],"payload":{"tag":"h2","lines":"38,39"}},{"content":"Key Learnings from Code Run","children":[{"content":"Implicit did not trigger at 4,221 tokens (free tier, only 2 calls)","children":[],"payload":{"tag":"li","lines":"47,48"}},{"content":"Explicit cached 4,213 tokens successfully","children":[],"payload":{"tag":"li","lines":"48,49"}},{"content":"Each Q used only 10-13 fresh tokens vs 4213 cached","children":[],"payload":{"tag":"li","lines":"49,50"}},{"content":"4096 minimum discovered via API error","children":[],"payload":{"tag":"li","lines":"50,52"}}],"payload":{"tag":"h2","lines":"46,47"}},{"content":"Connections","children":[{"content":"Topic 14 (Memory): caching &#x2260; memory &#x2014; cost optimization on in-context state","children":[],"payload":{"tag":"li","lines":"53,54"}},{"content":"Topic 15 (Gemini API): usage_metadata is how you verify caching","children":[],"payload":{"tag":"li","lines":"54,55"}},{"content":"Topic 17 (Context Window): cache stable prefix + manage growing history","children":[],"payload":{"tag":"li","lines":"55,56"}}],"payload":{"tag":"h2","lines":"52,53"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>

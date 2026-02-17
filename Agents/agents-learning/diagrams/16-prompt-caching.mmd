@@ -1,0 +1,49 @@
+mindmap
+  root((Prompt Caching))
+    Why Cache?
+      API stateless - full context every call
+      5k prompt × 20 turns = 100k tokens
+      Fresh $0.10/MTok vs Cached $0.025/MTok
+      4x cheaper on cached reads
+    Implicit Caching
+      Automatic - no code change
+      Gemini detects repeated prefix
+      Frequency-dependent
+        Needs many calls to trigger
+        Free tier unreliable
+      Check cached_content_token_count
+        None = no hit
+        gt 0 = cache hit
+    Explicit Caching
+      client.caches.create()
+      Returns cache name
+      Use cached_content=cache.name
+      Guaranteed hit within TTL
+      Minimum 4096 tokens
+      Default TTL 1 hour
+      Storage fee - delete when done
+    Token Counting
+      Implicit call
+        prompt_token_count = ALL tokens
+        cached_count = implicit hit portion
+      Explicit cache call
+        prompt_token_count = FRESH ONLY
+        cached_count = from cache
+        Do NOT subtract
+    Cache Management
+      Create
+      List
+      Update TTL
+      Delete
+    When to Cache
+      Large system prompt + many users
+      Document upload sessions
+      Codebase review passes
+      Batch processing
+      Dev and testing iterations
+      NOT per-user dynamic history
+    Key Learnings
+      Implicit needs frequency not just size
+      4096 token minimum explicit
+      10-13 fresh tokens per Q vs 4213 cached
+      Always delete cache when session ends
