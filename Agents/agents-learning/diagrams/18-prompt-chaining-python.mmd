@@ -1,0 +1,40 @@
+flowchart TD
+    subgraph CHAIN["Prompt Chain Pipeline"]
+        INPUT[/"User Input: Topic"/] --> S1
+
+        subgraph S1_BOX["Step 1: Extract"]
+            S1["call_gemini(EXTRACT_SYSTEM, topic)"]
+            S1 --> S1_OUT["key_points"]
+        end
+
+        S1_OUT --> GATE{{"Gate: enough points?"}}
+        GATE -->|"Fail"| STOP["Chain Stopped"]
+        GATE -->|"Pass"| S2
+
+        subgraph S2_BOX["Step 2: Draft"]
+            S2["call_gemini(DRAFT_SYSTEM, key_points)"]
+            S2 --> S2_OUT["draft"]
+        end
+
+        S2_OUT --> S3
+
+        subgraph S3_BOX["Step 3: Critique"]
+            S3["call_gemini(CRITIQUE_SYSTEM, draft)"]
+            S3 --> S3_OUT["critique"]
+        end
+
+        S2_OUT --> S4
+        S3_OUT --> S4
+
+        subgraph S4_BOX["Step 4: Polish"]
+            S4["call_gemini(POLISH_SYSTEM, draft + critique)"]
+            S4 --> S4_OUT["final_post"]
+        end
+    end
+
+    S4_OUT --> OUTPUT[/"Final Output"/]
+
+    style GATE fill:#ff9,stroke:#333
+    style STOP fill:#f66,stroke:#333,color:#fff
+    style OUTPUT fill:#6f6,stroke:#333
+    style INPUT fill:#69f,stroke:#333,color:#fff

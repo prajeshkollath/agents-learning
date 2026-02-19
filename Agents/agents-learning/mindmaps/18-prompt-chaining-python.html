@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+.markmap-dark {
+  background: #27272a;
+  color: white;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.18.12/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.18.12/dist/index.js"></script><script>((r) => {
+          setTimeout(r);
+        })(() => {
+  const { markmap, mm } = window;
+  const toolbar = new markmap.Toolbar();
+  toolbar.attach(mm);
+  const el = toolbar.render();
+  el.setAttribute("style", "position:absolute;bottom:20px;right:20px");
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+              if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                document.documentElement.classList.add("markmap-dark");
+              }
+            })(() => window.markmap,null,{"content":"Building a Prompt Chain in Python","children":[{"content":"Building Block","children":[{"content":"One helper function: call_gemini(system, user)","children":[],"payload":{"tag":"h3","lines":"3,4"}},{"content":"Each call is independent, single-turn","children":[],"payload":{"tag":"h3","lines":"4,5"}},{"content":"No conversation history between steps","children":[],"payload":{"tag":"h3","lines":"5,6"}},{"content":"The chain is in Python, not in the model","children":[],"payload":{"tag":"h3","lines":"6,7"}}],"payload":{"tag":"h2","lines":"2,3"}},{"content":"Each Step Gets Its Own System Prompt","children":[{"content":"System prompt = job description (persona)","children":[],"payload":{"tag":"h3","lines":"9,10"}},{"content":"User message = today&apos;s task (input)","children":[],"payload":{"tag":"h3","lines":"10,11"}},{"content":"Different persona per step (writer, critic, editor)","children":[],"payload":{"tag":"h3","lines":"11,12"}},{"content":"Reusable across pipelines","children":[],"payload":{"tag":"h3","lines":"12,13"}}],"payload":{"tag":"h2","lines":"8,9"}},{"content":"Data Flow Between Steps","children":[{"content":"f-string glue: output of one &#x2192; input of next","children":[],"payload":{"tag":"h3","lines":"15,16"}},{"content":"Later steps can use ANY earlier output (not just previous)","children":[],"payload":{"tag":"h3","lines":"16,17"}},{"content":"All intermediate results are Python variables","children":[],"payload":{"tag":"h3","lines":"17,18"}}],"payload":{"tag":"h2","lines":"14,15"}},{"content":"Gates (Programmatic Checks)","children":[{"content":"Pure Python, no LLM call","children":[],"payload":{"tag":"h3","lines":"20,21"}},{"content":"Gate after steps where failure wastes downstream tokens","children":[],"payload":{"tag":"h3","lines":"21,22"}},{"content":"Count gate: enough items extracted?","children":[],"payload":{"tag":"h3","lines":"22,23"}},{"content":"JSON gate: valid parseable output?","children":[],"payload":{"tag":"h3","lines":"23,24"}},{"content":"Gate fails &#x2192; chain stops immediately","children":[],"payload":{"tag":"h3","lines":"24,25"}}],"payload":{"tag":"h2","lines":"19,20"}},{"content":"Four Patterns","children":[{"content":"Simple chain: call &#x2192; call &#x2192; call","children":[],"payload":{"tag":"h3","lines":"27,28"}},{"content":"Gated chain: call &#x2192; gate &#x2192; call","children":[],"payload":{"tag":"h3","lines":"28,29"}},{"content":"Multi-input step: step3 uses step1 + step2 output","children":[],"payload":{"tag":"h3","lines":"29,30"}},{"content":"JSON gate: structured output + validation","children":[],"payload":{"tag":"h3","lines":"30,31"}}],"payload":{"tag":"h2","lines":"26,27"}},{"content":"Why Not One Big Prompt?","children":[{"content":"Can&apos;t inspect intermediate results","children":[],"payload":{"tag":"h3","lines":"33,34"}},{"content":"Can&apos;t add quality checks mid-process","children":[],"payload":{"tag":"h3","lines":"34,35"}},{"content":"Can&apos;t swap models per step","children":[],"payload":{"tag":"h3","lines":"35,36"}},{"content":"Role confusion (writer vs critic)","children":[],"payload":{"tag":"h3","lines":"36,37"}}],"payload":{"tag":"h2","lines":"32,33"}},{"content":"Why Not Multi-Turn?","children":[{"content":"Context window grows across steps","children":[],"payload":{"tag":"h3","lines":"39,40"}},{"content":"No programmatic control between steps","children":[],"payload":{"tag":"h3","lines":"40,41"}},{"content":"Each step only needs specific input, not full history","children":[],"payload":{"tag":"h3","lines":"41,42"}}],"payload":{"tag":"h2","lines":"38,39"}},{"content":"Error Handling","children":[{"content":"Fail fast: stop and report which step failed","children":[],"payload":{"tag":"h3","lines":"44,45"}},{"content":"Retry: re-run failed step with modified prompt","children":[],"payload":{"tag":"h3","lines":"45,46"}},{"content":"Key advantage: know exactly WHERE things broke","children":[],"payload":{"tag":"h3","lines":"46,47"}}],"payload":{"tag":"h2","lines":"43,44"}}],"payload":{"tag":"h1","lines":"0,1"}},null)</script>
+</body>
+</html>
