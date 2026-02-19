@@ -31,7 +31,7 @@
 - [x] 15 - Gemini API basics - google-genai SDK, raw calls, response object, multi-turn
 - [x] 16 - Prompt caching - cache_control, cost reduction, when and how to cache
 - [x] 17 - Context window management - truncation, sliding window, auto-summarize (silent + prompted)
-- [ ] 18 - Building a prompt chain in Python
+- [x] 18 - Building a prompt chain in Python
 - [ ] 19 - Building a workflow with routing in Python
 - [ ] 20 - State management - passing context between steps
 - [ ] 21 - Memory engineering - conversation memory, summary memory, vector/RAG basics
