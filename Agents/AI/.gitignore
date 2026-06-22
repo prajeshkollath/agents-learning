@@ -1,0 +1,8 @@
+# Obsidian per-machine / volatile state — not worth versioning
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# Attachments can grow large — uncomment if you prefer to keep media out of git
+# attachments/

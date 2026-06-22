@@ -1,0 +1,10 @@
+{
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false,
+  "attachmentFolderPath": "attachments",
+  "showLineNumber": true,
+  "foldHeading": true,
+  "foldIndent": true,
+  "showFrontmatter": true
+}
