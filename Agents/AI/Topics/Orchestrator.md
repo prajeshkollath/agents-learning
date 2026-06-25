@@ -36,16 +36,61 @@ Two analogies that stick:
 
 See the responsibility split in [[Orchestrator vs LLM Responsibilities]].
 
-## Its job (the spec)
+## What the orchestrator performs (its responsibilities)
 
-The loop · state/memory · tool dispatch · enforcement/[[Guardrails]] · output
-validation · [[Observability]] · retries/idempotency · cost control · the
-security boundary. That's *what* it does — the rest of this note is *how you
-build and ship one*.
+This is *what* it does — each item **branches to its own detailed page** (drilled
+as we go). The rest of *this* note is *how you build and ship one*.
+
+**Control flow**
+- [[Agent Loop]] — the perceive → reason → act → observe cycle the orchestrator runs.
+- [[Routing]] — choosing the next step, branch, or sub-agent.
+- [[Termination Conditions]] — forcing the loop to stop (max steps, budget, done-detection).
+
+**State & context**
+- [[State Management]] — the live execution state (current step, scratchpad), persisted so runs survive restarts.
+- [[Agent Memory]] — longer-term recall (working / episodic / semantic / procedural).
+- [[Context Building]] — assembling each prompt from state + memory + tool specs ("context engineering").
+
+**Tools & I/O contracts**
+- [[Tool Calling]] — dispatching the LLM's chosen tool with its arguments.
+- [[Schemas]] — the structured input/output contracts for tools and responses.
+- [[Output Validation]] — runtime checking/parsing of the LLM's output *before* acting on it.
+
+**Reliability**
+- [[Error Handling]] — catching tool/model failures without crashing the run.
+- [[Retries and Idempotency]] — retrying safely so a repeat doesn't double-act.
+- [[Fallback Strategies]] — switching model / tool / path when the primary fails.
+
+**Safety & governance**
+- [[Guardrails]] — policy/permission enforcement between the LLM's proposal and execution.
+- [[Security Boundary]] — secrets, auth, and sandboxing the LLM never crosses (see [[Sandboxed Execution]]).
+
+**Operations**
+- [[Observability]] — logs, traces, and metrics across every step (your "logs/tracing").
+- [[Cost Control]] — token accounting and budget caps per run.
+
+> **"Evals" vs "output validation" — these are different, don't conflate them.**
+> [[Output Validation]] is a *runtime* orchestrator check: *is this single
+> response well-formed and safe to act on?* [[Agent Evaluation]] is *quality
+> measurement of the agent across many runs* — a separate domain
+> ([[08 Evaluation]]), not a per-step orchestrator function.
 
 ## Types of orchestrator (the options)
 
-Four independent axes; a real orchestrator is one choice on each.
+These are **four independent dimensions, not a menu you pick one item from.**
+**Every real orchestrator sits on all four axes at once** — to *describe* an
+orchestrator you state where it sits on each.
+
+> **Analogy — ordering coffee.** *Size*, *milk*, *hot/iced*, and *shots* are
+> independent axes; you don't pick "size OR milk," you choose a value on *each*.
+> Same here: one orchestrator = one choice on every axis simultaneously.
+
+| #   | Axis                | The question it answers       | Options                                                   |     |
+| --- | ------------------- | ----------------------------- | --------------------------------------------------------- | --- |
+| 1   | **Control model**   | *Who decides the next step?*  | code-driven (workflow) ↔ LLM-driven (autonomous) ↔ hybrid |     |
+| 2   | **Build approach**  | *Who wrote the orchestrator?* | roll-your-own ↔ framework ↔ managed/hosted                |     |
+| 3   | **Execution model** | *How does it run over time?*  | in-process loop ↔ durable ↔ event-driven/queue            |     |
+| 4   | **Topology**        | *How many agents?*            | single-agent ↔ multi-agent                                |     |
 
 **Axis 1 — Control model** (who drives the next step):
 - **Workflow / code-driven** — fixed graph/DAG, you hardcode the steps. Predictable, cheap, testable. *(LangGraph graphs, prompt chains.)*
@@ -67,6 +112,44 @@ Four independent axes; a real orchestrator is one choice on each.
 - **Single-agent** — one loop, one model.
 - **Multi-agent** — a supervisor orchestrator coordinating sub-agents → [[Multi-Agent Systems]].
 
+### One orchestrator, plotted on all four
+
+Same word "orchestrator", four independent knobs → completely different systems:
+
+| | Axis 1 Control | Axis 2 Build | Axis 3 Execution | Axis 4 Topology |
+|---|---|---|---|---|
+| **Claude Code** (this session) | LLM-driven | managed/framework | in-process loop | single-agent |
+| **Production refund agent** | hybrid | framework (LangGraph) | durable (Temporal) | single-agent |
+
+**Interview point:** "workflow vs agent" is only *Axis 1*. An architect names where
+the system sits on **all four** and why — e.g. *"LLM-driven control because the task
+is open-ended, but durable execution because runs take 20 minutes and we can't lose
+progress."* That combination **is** the design.
+
+### How the axes interact
+
+The axes are independent, but choices on one **pull** you toward choices on
+another. The common couplings:
+
+- **Control (1) → Execution (3):** LLM-driven control means an *unpredictable*
+  number of steps and longer runs → pushes you toward **durable execution** +
+  hard [[Termination Conditions]]. A fixed workflow has predictable runtime, so an
+  in-process loop is usually fine.
+- **Topology (4) → Execution (3):** multi-agent systems need agents to talk →
+  pushes you toward **event-driven / queue-based** execution ([[Agent Communication Protocols]]). A single agent runs happily as one in-process loop.
+- **Topology (4) → Build (2):** multi-agent is a lot to hand-roll → pushes you
+  toward frameworks built for it ([[CrewAI]], [[AutoGen]]).
+- **Build (2) → Execution (3):** **managed/hosted** services lock you into *their*
+  execution model — you often **can't** add your own durable engine. Rolling your
+  own keeps Axis 3 fully open.
+- **Control (1) → Build (2):** a simple autonomous loop is ~20 lines (roll-your-own
+  is easy); a complex branching workflow graph is where a framework like
+  [[LangGraph]] earns its keep.
+
+**Takeaway:** pick the axis your *hardest constraint* lives on first (e.g. "runs
+take 20 min, can't lose progress" → Execution = durable), then let that pull the
+others into place.
+
 ## How to build one (maturity ladder)
 
 Start at Level 0; add layers only as production demands them.
@@ -84,6 +167,9 @@ Level 6  + streaming, concurrency, durable execution
 Levels map to: [[Tool Calling]], [[Agent Memory]], [[Guardrails]],
 [[Termination Conditions]], [[Observability]], [[Durable Execution]].
 **The art is not over-building** — a demo needs L0–1; a finance agent needs all.
+
+> **Full walkthrough:** see [[Orchestrator Maturity Ladder]] for each rung
+> explained with real-life triggers and the infrastructure it requires.
 
 ## How to deploy it
 
@@ -180,7 +266,13 @@ Default **left** for prototypes; move **right** as reliability/scale demands.
 
 ## Q&A insights
 
-_(To be filled as we go deeper.)_
+**Q: What are the "4 axes" meant to be — do I pick one?**
+No. They are **independent dimensions, not a menu.** Every orchestrator sits on
+*all four at once*; to describe one you state its value on each (like ordering
+coffee: size + milk + temperature + shots are separate choices, not alternatives).
+"Workflow vs agent" is only Axis 1 — naming all four (control, build, execution,
+topology) and *why* is the actual architect-level answer. See the worked table
+above (Claude Code vs a refund agent plotted across all four).
 
 ## Related
 - Defined in [[Orchestrator vs LLM Responsibilities]] · part of [[02 Agent Architecture and Orchestration]] · [[AI Agents MOC]]

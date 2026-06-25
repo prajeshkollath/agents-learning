@@ -3,6 +3,8 @@
   "newLinkFormat": "shortest",
   "useMarkdownLinks": false,
   "attachmentFolderPath": "attachments",
+  "newFileLocation": "folder",
+  "newFileFolderPath": "Topics",
   "showLineNumber": true,
   "foldHeading": true,
   "foldIndent": true,
