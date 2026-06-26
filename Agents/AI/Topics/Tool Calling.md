@@ -13,6 +13,7 @@ aliases:
   - Tool Dispatch
 ---
 
+
 # Tool Calling
 
 > How an agent **acts on the world** — the LLM proposes a tool + arguments, the
@@ -49,6 +50,14 @@ The **tool registry** maps names → functions + schemas. Good tool design
 (clear names, tight schemas, helpful errors) directly improves how well the
 model selects and uses them.
 
+## The tool schema
+
+Each tool is exposed to the model via a **schema** — `name` + `description` +
+typed arguments — which is what lets the model decide *when* and *how* to call it,
+and lets the orchestrator validate the call. The full anatomy (annotated example,
+what it helps with, the "prompt engineering disguised as types" insight) lives in
+[[Schemas]].
+
 ## Likely issues
 - **Hallucinated tool/args** → caught by schema validation, not execution.
 - **No timeout/retry** → a hung tool stalls the whole agent ([[Retries and Idempotency]]).
@@ -67,7 +76,10 @@ with an idempotency key, and returns the confirmation into the loop.
 
 ## Q&A insights
 
-_(To be filled as we go deeper.)_
+**Q: What does a tool schema look like / what does it help with?**
+Captured in [[Schemas]] (the dedicated note) — `name` + `description` +
+`input_schema`, driving selection, arguments, validation, and constrained
+decoding; "a tool schema is prompt engineering disguised as a type definition."
 
 ## Related
 - Part of [[Orchestrator]]'s responsibilities · headline of [[04 Tool Use and Function Calling]] · [[AI Agents MOC]]
