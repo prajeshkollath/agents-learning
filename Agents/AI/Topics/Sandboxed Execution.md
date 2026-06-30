@@ -258,6 +258,39 @@ code from untrusted *user* input at runtime, unsupervised.
   the relevant one — you're not running code interpreters, but you *are* letting an
   LLM-driven agent run commands on your VM.
 
+- **"The agent's container only has the dev DB — so it can't touch prod creds,
+  right? And if I *do* need it to access prod, do I run agent + prod code in a
+  separate container?"** — Q1: **yes, and that's the intended design** — the dev
+  agent's box is scoped to dev resources only, so there's no prod credential in it
+  to leak. Note the agent **doesn't carry code to prod**: promotion goes through a
+  separate non-LLM path — *agent writes code in dev → you review + merge → CI/CD
+  deploys to prod with its own deploy creds the agent never sees*. So a **dev agent
+  never needs prod creds, ever.**
+
+  Q2 has a hidden assumption — challenge it first: **why** would the agent need
+  prod creds? There are two different agent types, and only one touches prod:
+  - **Dev agent** (writes features) → **never** gets prod creds; CI deploys.
+  - **Ops/SRE agent** (its job *is* to operate on prod — incident queries,
+    restarts, migrations) → gets prod access, but **scoped, never the master key.**
+
+  And even for the ops agent, the answer isn't "give it prod" — it's **scope prod
+  down**. The protection is the *credential*, not which container:
+  1. **Least-privilege, scoped credential** — read-only, specific tables/services,
+     short-lived token — so "prod access" is a narrow capability, never god-mode.
+  2. **The agent never *sees* the raw credential** — the orchestrator injects the
+     scoped token at execution; the model sees a tool (`query_prod_readonly(sql)`),
+     never the secret ([[Security Boundary]]). Injection can't steal a key that was
+     never in context.
+  3. **Tighter guardrails** — a prod-operating agent gates far more calls behind
+     [[Human in the Loop]] approval than a dev agent.
+
+  Yes, you still isolate the ops agent in its own container — but isolation is the
+  *outer* layer; the real protection is that what's inside is a narrow, short-lived,
+  read-mostly token, not full prod. **The principle:** you never "give an agent prod
+  creds" — you give it the *narrowest scoped capability that does the job, injected
+  by the orchestrator so the model never sees the raw key*; for a dev agent that
+  capability is *nothing in prod at all*, because CI/CD does the promotion.
+
 ## Related
 - The *containment* half of [[Security Boundary]] — what code can touch if it runs
 - [[Guardrails]] — the *policy* layer ("should this run?") that sits above the sandbox
