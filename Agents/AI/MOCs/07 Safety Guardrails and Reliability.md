@@ -19,6 +19,8 @@ and protection against misuse.
 
 ## Topics
 - [[Guardrails]]
+- [[Security Boundary]] — secrets/auth/sandbox: the hard line the LLM can't cross
+- [[Sandboxed Execution]] — isolating untrusted/generated code
 - [[Fail-Safe Defaults]] — limits default to the safe option
 - [[Policy Engine Layer]] — separate from the LLM
 - [[PII Filtering]] — and regulated domains (finance, healthcare)
