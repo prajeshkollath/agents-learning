@@ -53,6 +53,30 @@ input is the *entire payload on the wire*.
 | **Images (vision)** | tokenised by resolution | a high-res image = thousands of tokens |
 | **Prior thinking blocks** | reasoning echoed back on multi-turn | when continuing on the same model |
 
+#### Tool schemas: **every exposed tool is billed on every call**
+
+Worth calling out because it surprises people: **every tool you expose to the agent
+counts in input tokens on every request — used or not.** Tool definitions are part
+of the payload, rendered first (`tools → system → messages`), and each contributes
+its full schema:
+
+- **`name`**
+- **`description`** — usually the biggest part; often a few sentences
+- **`input_schema`** — every parameter's name, type, `description`, `enum` values, `required` list
+
+So 20 richly-described tools can be several thousand input tokens — paid on **every**
+call, because the model needs the whole menu to choose. An *unused* tool costs the
+same as a used one; using a tool only adds *output* tokens (generating the call).
+And because history is resent every turn, that schema block is re-sent on all 12
+turns of a 12-step run — a **fixed tax × conversation length**.
+
+Two consequences: (1) the tool block sits at position 0, so it's **cacheable** — but
+adding/removing/reordering a tool mid-conversation invalidates the whole cache
+([[Caching Strategies]]); (2) at large tool counts, loading every schema is wasteful,
+which is what **tool search** solves — load only the relevant schemas on demand
+([[Tool Calling]]). Lean tool sets are a *cost* concern, not just a
+least-privilege ([[Security Boundary]]) one — don't expose 30 tools "just in case".
+
 ### OUTPUT — everything the model generates
 
 | Component | What it is | Note |
